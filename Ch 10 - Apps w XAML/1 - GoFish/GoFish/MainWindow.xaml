@@ -1,0 +1,46 @@
+﻿<Window x:Class="GoFish.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoFish"
+        mc:Ignorable="d"
+        Title="Go Fish!" Height="500" Width="525" Background="Gray">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="150"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Your Name" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBox x:Name="playerName" FontSize="12" Width="150" />
+            <Button x:Name="startButton" Margin="5,0" Content="Start the Game!" Click="startButton_Click_1" />
+        </StackPanel>
+        
+        <TextBlock Text="Game Progress" Grid.Row="2" Margin="0,10,0,0" />
+        <ScrollViewer x:Name="gameProgress" Grid.Row="3" FontSize="12" Background="White" Foreground="Black" />
+        
+        <TextBlock Text="Books" Grid.Row="4" Margin="0,10,0,0" />
+        <ScrollViewer x:Name="gameBooks" FontSize="12" Background="White" Foreground="Black" Grid.Row="5" Grid.RowSpan="2"/>
+
+        <TextBlock Text="Your Hand" Grid.Row="0" Grid.Column="2" />
+        <ListBox x:Name="cards" Background="White" FontSize="12"
+                 Height="Auto" Margin="0,0,0,10"
+                 Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" />
+        
+        <Button x:Name="askForACard" Content="Ask for a Card"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Grid.Row="6" Grid.Column="2" Click="askForACard_Click_1" />
+    </Grid>
+</Window>
