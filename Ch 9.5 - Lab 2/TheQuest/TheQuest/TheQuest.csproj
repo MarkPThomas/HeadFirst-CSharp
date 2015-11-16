@@ -47,13 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Enemies\Bat.cs" />
-    <Compile Include="IDefense.cs" />
+    <Compile Include="Interfaces and Enums\IDefense.cs" />
     <Compile Include="Classes\Weapons\BattleAxe.cs" />
     <Compile Include="Classes\Weapons\BluePotion.cs" />
     <Compile Include="Classes\Weapons\Bomb.cs" />
     <Compile Include="Classes\Weapons\Bow.cs" />
     <Compile Include="Classes\Weapons\RedPotion.cs" />
-    <Compile Include="Direction.cs" />
+    <Compile Include="Interfaces and Enums\Direction.cs" />
     <Compile Include="Abstract Classes\Enemy.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -64,7 +64,7 @@
     <Compile Include="Classes\Game.cs" />
     <Compile Include="Classes\Enemies\Ghost.cs" />
     <Compile Include="Classes\Enemies\Ghoul.cs" />
-    <Compile Include="IPotion.cs" />
+    <Compile Include="Interfaces and Enums\IPotion.cs" />
     <Compile Include="Classes\Weapons\Mace.cs" />
     <Compile Include="Abstract Classes\Mover.cs" />
     <Compile Include="Classes\Player.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="Classes\Weapons\Sword.cs" />
     <Compile Include="Abstract Classes\Weapon.cs" />
     <Compile Include="Classes\Enemies\Wizard.cs" />
-    <Compile Include="IExplosive.cs" />
+    <Compile Include="Interfaces and Enums\IExplosive.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,6 +89,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

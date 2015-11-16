@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace TheQuest
 {
     class Wizard : Enemy
     {
+        #region Properties and Fields
+
         private const int damage = 8;
         private const int hitPoints = 15;
+        #endregion
 
+        #region Initialization
         public Wizard(Game game, Point location)
             : base(game, location, hitPoints)
         { }
+        #endregion
 
+        #region Movement
         public override void Move(Random random)
         {
             if (Dead) { return; }
@@ -26,7 +28,7 @@ namespace TheQuest
             }
             else
             {
-                Move(FindPlayerDirection(game.PlayerLocation), game.Boundaries);
+                location = Move(FindPlayerDirection(game.PlayerLocation), game.Boundaries);
             }
 
             if (NearPlayer())
@@ -34,5 +36,6 @@ namespace TheQuest
                 game.HitPlayer(damage, random);
             }
         }
+        #endregion
     }
 }

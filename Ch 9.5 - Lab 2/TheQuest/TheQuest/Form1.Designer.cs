@@ -28,35 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.iconPlayer = new System.Windows.Forms.PictureBox();
-            this.iconSword = new System.Windows.Forms.PictureBox();
-            this.iconBat = new System.Windows.Forms.PictureBox();
-            this.iconGhoul = new System.Windows.Forms.PictureBox();
-            this.iconGhost = new System.Windows.Forms.PictureBox();
-            this.iconBow = new System.Windows.Forms.PictureBox();
-            this.iconPotionBlue = new System.Windows.Forms.PictureBox();
-            this.iconPotionRed = new System.Windows.Forms.PictureBox();
-            this.iconMace = new System.Windows.Forms.PictureBox();
-            this.iconBattleAxe = new System.Windows.Forms.PictureBox();
-            this.iconQuiver = new System.Windows.Forms.PictureBox();
-            this.iconBomb = new System.Windows.Forms.PictureBox();
-            this.iconShield = new System.Windows.Forms.PictureBox();
-            this.iconWizard = new System.Windows.Forms.PictureBox();
+            this.components = new System.ComponentModel.Container();
+            this.player = new System.Windows.Forms.PictureBox();
+            this.sword = new System.Windows.Forms.PictureBox();
+            this.bat = new System.Windows.Forms.PictureBox();
+            this.ghoul = new System.Windows.Forms.PictureBox();
+            this.ghost = new System.Windows.Forms.PictureBox();
+            this.bow = new System.Windows.Forms.PictureBox();
+            this.bluePotion = new System.Windows.Forms.PictureBox();
+            this.redPotion = new System.Windows.Forms.PictureBox();
+            this.mace = new System.Windows.Forms.PictureBox();
+            this.battleAxe = new System.Windows.Forms.PictureBox();
+            this.quiver = new System.Windows.Forms.PictureBox();
+            this.bomb = new System.Windows.Forms.PictureBox();
+            this.shield = new System.Windows.Forms.PictureBox();
+            this.wizard = new System.Windows.Forms.PictureBox();
             this.inventorySword = new System.Windows.Forms.PictureBox();
             this.inventoryPotionRed = new System.Windows.Forms.PictureBox();
             this.inventoryBow = new System.Windows.Forms.PictureBox();
             this.inventoryPotionBlue = new System.Windows.Forms.PictureBox();
             this.inventoryMace = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.wizardHitPoints = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ghostHitPoints = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.batHitPoints = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.playerHitPoints = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.ghoulHitPoints = new System.Windows.Forms.Label();
             this.move = new System.Windows.Forms.GroupBox();
             this.moveRight = new System.Windows.Forms.Button();
@@ -72,187 +66,205 @@
             this.inventoryQuiver = new System.Windows.Forms.PictureBox();
             this.inventoryBattleAxe = new System.Windows.Forms.PictureBox();
             this.inventoryBomb = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPlayer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSword)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconGhoul)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconGhost)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPotionBlue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPotionRed)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconMace)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBattleAxe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconQuiver)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBomb)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconShield)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconWizard)).BeginInit();
+            this.actionTimer = new System.Windows.Forms.Timer(this.components);
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.batHitPoints = new System.Windows.Forms.Label();
+            this.ghostHitPoints = new System.Windows.Forms.Label();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.playerHitPoints = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.grpbBoxPlayStyle = new System.Windows.Forms.GroupBox();
+            this.actionGame = new System.Windows.Forms.RadioButton();
+            this.turnBased = new System.Windows.Forms.RadioButton();
+            this.btnSetPlayStyle = new System.Windows.Forms.Button();
+            this.lblLevel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ghoul)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ghost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePotion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPotion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.battleAxe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quiver)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bomb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shield)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wizard)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventorySword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryPotionRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryPotionBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryMace)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.move.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryShield)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryQuiver)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBattleAxe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBomb)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.grpbBoxPlayStyle.SuspendLayout();
             this.SuspendLayout();
             // 
-            // iconPlayer
+            // player
             // 
-            this.iconPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.iconPlayer.BackgroundImage = global::TheQuest.Properties.Resources.player;
-            this.iconPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconPlayer.Location = new System.Drawing.Point(74, 55);
-            this.iconPlayer.Name = "iconPlayer";
-            this.iconPlayer.Size = new System.Drawing.Size(30, 30);
-            this.iconPlayer.TabIndex = 0;
-            this.iconPlayer.TabStop = false;
+            this.player.BackColor = System.Drawing.Color.Transparent;
+            this.player.BackgroundImage = global::TheQuest.Properties.Resources.player;
+            this.player.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.player.Location = new System.Drawing.Point(74, 55);
+            this.player.Name = "player";
+            this.player.Size = new System.Drawing.Size(30, 30);
+            this.player.TabIndex = 0;
+            this.player.TabStop = false;
             // 
-            // iconSword
+            // sword
             // 
-            this.iconSword.BackColor = System.Drawing.Color.Transparent;
-            this.iconSword.BackgroundImage = global::TheQuest.Properties.Resources.sword;
-            this.iconSword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconSword.Location = new System.Drawing.Point(110, 55);
-            this.iconSword.Name = "iconSword";
-            this.iconSword.Size = new System.Drawing.Size(30, 30);
-            this.iconSword.TabIndex = 1;
-            this.iconSword.TabStop = false;
+            this.sword.BackColor = System.Drawing.Color.Transparent;
+            this.sword.BackgroundImage = global::TheQuest.Properties.Resources.sword;
+            this.sword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sword.Location = new System.Drawing.Point(110, 55);
+            this.sword.Name = "sword";
+            this.sword.Size = new System.Drawing.Size(30, 30);
+            this.sword.TabIndex = 1;
+            this.sword.TabStop = false;
             // 
-            // iconBat
+            // bat
             // 
-            this.iconBat.BackColor = System.Drawing.Color.Transparent;
-            this.iconBat.BackgroundImage = global::TheQuest.Properties.Resources.bat;
-            this.iconBat.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconBat.Location = new System.Drawing.Point(182, 91);
-            this.iconBat.Name = "iconBat";
-            this.iconBat.Size = new System.Drawing.Size(30, 30);
-            this.iconBat.TabIndex = 2;
-            this.iconBat.TabStop = false;
+            this.bat.BackColor = System.Drawing.Color.Transparent;
+            this.bat.BackgroundImage = global::TheQuest.Properties.Resources.bat;
+            this.bat.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bat.Location = new System.Drawing.Point(182, 91);
+            this.bat.Name = "bat";
+            this.bat.Size = new System.Drawing.Size(30, 30);
+            this.bat.TabIndex = 2;
+            this.bat.TabStop = false;
             // 
-            // iconGhoul
+            // ghoul
             // 
-            this.iconGhoul.BackColor = System.Drawing.Color.Transparent;
-            this.iconGhoul.BackgroundImage = global::TheQuest.Properties.Resources.ghoul;
-            this.iconGhoul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconGhoul.Location = new System.Drawing.Point(182, 55);
-            this.iconGhoul.Name = "iconGhoul";
-            this.iconGhoul.Size = new System.Drawing.Size(30, 30);
-            this.iconGhoul.TabIndex = 3;
-            this.iconGhoul.TabStop = false;
+            this.ghoul.BackColor = System.Drawing.Color.Transparent;
+            this.ghoul.BackgroundImage = global::TheQuest.Properties.Resources.ghoul;
+            this.ghoul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ghoul.Location = new System.Drawing.Point(182, 55);
+            this.ghoul.Name = "ghoul";
+            this.ghoul.Size = new System.Drawing.Size(30, 30);
+            this.ghoul.TabIndex = 3;
+            this.ghoul.TabStop = false;
             // 
-            // iconGhost
+            // ghost
             // 
-            this.iconGhost.BackColor = System.Drawing.Color.Transparent;
-            this.iconGhost.BackgroundImage = global::TheQuest.Properties.Resources.ghost;
-            this.iconGhost.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconGhost.Location = new System.Drawing.Point(218, 55);
-            this.iconGhost.Name = "iconGhost";
-            this.iconGhost.Size = new System.Drawing.Size(30, 30);
-            this.iconGhost.TabIndex = 4;
-            this.iconGhost.TabStop = false;
+            this.ghost.BackColor = System.Drawing.Color.Transparent;
+            this.ghost.BackgroundImage = global::TheQuest.Properties.Resources.ghost;
+            this.ghost.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ghost.Location = new System.Drawing.Point(218, 55);
+            this.ghost.Name = "ghost";
+            this.ghost.Size = new System.Drawing.Size(30, 30);
+            this.ghost.TabIndex = 4;
+            this.ghost.TabStop = false;
             // 
-            // iconBow
+            // bow
             // 
-            this.iconBow.BackColor = System.Drawing.Color.Transparent;
-            this.iconBow.BackgroundImage = global::TheQuest.Properties.Resources.bow;
-            this.iconBow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconBow.Location = new System.Drawing.Point(110, 91);
-            this.iconBow.Name = "iconBow";
-            this.iconBow.Size = new System.Drawing.Size(30, 30);
-            this.iconBow.TabIndex = 5;
-            this.iconBow.TabStop = false;
+            this.bow.BackColor = System.Drawing.Color.Transparent;
+            this.bow.BackgroundImage = global::TheQuest.Properties.Resources.bow;
+            this.bow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bow.Location = new System.Drawing.Point(110, 91);
+            this.bow.Name = "bow";
+            this.bow.Size = new System.Drawing.Size(30, 30);
+            this.bow.TabIndex = 5;
+            this.bow.TabStop = false;
             // 
-            // iconPotionBlue
+            // bluePotion
             // 
-            this.iconPotionBlue.BackColor = System.Drawing.Color.Transparent;
-            this.iconPotionBlue.BackgroundImage = global::TheQuest.Properties.Resources.potion_blue;
-            this.iconPotionBlue.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconPotionBlue.Location = new System.Drawing.Point(254, 55);
-            this.iconPotionBlue.Name = "iconPotionBlue";
-            this.iconPotionBlue.Size = new System.Drawing.Size(30, 30);
-            this.iconPotionBlue.TabIndex = 6;
-            this.iconPotionBlue.TabStop = false;
+            this.bluePotion.BackColor = System.Drawing.Color.Transparent;
+            this.bluePotion.BackgroundImage = global::TheQuest.Properties.Resources.potion_blue;
+            this.bluePotion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bluePotion.Location = new System.Drawing.Point(254, 55);
+            this.bluePotion.Name = "bluePotion";
+            this.bluePotion.Size = new System.Drawing.Size(30, 30);
+            this.bluePotion.TabIndex = 6;
+            this.bluePotion.TabStop = false;
             // 
-            // iconPotionRed
+            // redPotion
             // 
-            this.iconPotionRed.BackColor = System.Drawing.Color.Transparent;
-            this.iconPotionRed.BackgroundImage = global::TheQuest.Properties.Resources.potion_red;
-            this.iconPotionRed.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconPotionRed.Location = new System.Drawing.Point(290, 55);
-            this.iconPotionRed.Name = "iconPotionRed";
-            this.iconPotionRed.Size = new System.Drawing.Size(30, 30);
-            this.iconPotionRed.TabIndex = 7;
-            this.iconPotionRed.TabStop = false;
+            this.redPotion.BackColor = System.Drawing.Color.Transparent;
+            this.redPotion.BackgroundImage = global::TheQuest.Properties.Resources.potion_red;
+            this.redPotion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.redPotion.Location = new System.Drawing.Point(290, 55);
+            this.redPotion.Name = "redPotion";
+            this.redPotion.Size = new System.Drawing.Size(30, 30);
+            this.redPotion.TabIndex = 7;
+            this.redPotion.TabStop = false;
             // 
-            // iconMace
+            // mace
             // 
-            this.iconMace.BackColor = System.Drawing.Color.Transparent;
-            this.iconMace.BackgroundImage = global::TheQuest.Properties.Resources.mace;
-            this.iconMace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconMace.Location = new System.Drawing.Point(146, 55);
-            this.iconMace.Name = "iconMace";
-            this.iconMace.Size = new System.Drawing.Size(30, 30);
-            this.iconMace.TabIndex = 8;
-            this.iconMace.TabStop = false;
+            this.mace.BackColor = System.Drawing.Color.Transparent;
+            this.mace.BackgroundImage = global::TheQuest.Properties.Resources.mace;
+            this.mace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.mace.Location = new System.Drawing.Point(146, 55);
+            this.mace.Name = "mace";
+            this.mace.Size = new System.Drawing.Size(30, 30);
+            this.mace.TabIndex = 8;
+            this.mace.TabStop = false;
             // 
-            // iconBattleAxe
+            // battleAxe
             // 
-            this.iconBattleAxe.BackColor = System.Drawing.Color.Transparent;
-            this.iconBattleAxe.BackgroundImage = global::TheQuest.Properties.Resources.battleaxe;
-            this.iconBattleAxe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconBattleAxe.Location = new System.Drawing.Point(146, 91);
-            this.iconBattleAxe.Name = "iconBattleAxe";
-            this.iconBattleAxe.Size = new System.Drawing.Size(30, 30);
-            this.iconBattleAxe.TabIndex = 9;
-            this.iconBattleAxe.TabStop = false;
+            this.battleAxe.BackColor = System.Drawing.Color.Transparent;
+            this.battleAxe.BackgroundImage = global::TheQuest.Properties.Resources.battleaxe;
+            this.battleAxe.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.battleAxe.Location = new System.Drawing.Point(146, 91);
+            this.battleAxe.Name = "battleAxe";
+            this.battleAxe.Size = new System.Drawing.Size(30, 30);
+            this.battleAxe.TabIndex = 9;
+            this.battleAxe.TabStop = false;
             // 
-            // iconQuiver
+            // quiver
             // 
-            this.iconQuiver.BackColor = System.Drawing.Color.Transparent;
-            this.iconQuiver.BackgroundImage = global::TheQuest.Properties.Resources.quiver;
-            this.iconQuiver.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconQuiver.Location = new System.Drawing.Point(146, 127);
-            this.iconQuiver.Name = "iconQuiver";
-            this.iconQuiver.Size = new System.Drawing.Size(30, 30);
-            this.iconQuiver.TabIndex = 10;
-            this.iconQuiver.TabStop = false;
+            this.quiver.BackColor = System.Drawing.Color.Transparent;
+            this.quiver.BackgroundImage = global::TheQuest.Properties.Resources.quiver;
+            this.quiver.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.quiver.Location = new System.Drawing.Point(146, 127);
+            this.quiver.Name = "quiver";
+            this.quiver.Size = new System.Drawing.Size(30, 30);
+            this.quiver.TabIndex = 10;
+            this.quiver.TabStop = false;
             // 
-            // iconBomb
+            // bomb
             // 
-            this.iconBomb.BackColor = System.Drawing.Color.Transparent;
-            this.iconBomb.BackgroundImage = global::TheQuest.Properties.Resources.bomb;
-            this.iconBomb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconBomb.Location = new System.Drawing.Point(110, 127);
-            this.iconBomb.Name = "iconBomb";
-            this.iconBomb.Size = new System.Drawing.Size(30, 30);
-            this.iconBomb.TabIndex = 11;
-            this.iconBomb.TabStop = false;
+            this.bomb.BackColor = System.Drawing.Color.Transparent;
+            this.bomb.BackgroundImage = global::TheQuest.Properties.Resources.bomb;
+            this.bomb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.bomb.Location = new System.Drawing.Point(110, 127);
+            this.bomb.Name = "bomb";
+            this.bomb.Size = new System.Drawing.Size(30, 30);
+            this.bomb.TabIndex = 11;
+            this.bomb.TabStop = false;
             // 
-            // iconShield
+            // shield
             // 
-            this.iconShield.BackColor = System.Drawing.Color.Transparent;
-            this.iconShield.BackgroundImage = global::TheQuest.Properties.Resources.shield;
-            this.iconShield.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconShield.Location = new System.Drawing.Point(110, 163);
-            this.iconShield.Name = "iconShield";
-            this.iconShield.Size = new System.Drawing.Size(30, 30);
-            this.iconShield.TabIndex = 12;
-            this.iconShield.TabStop = false;
+            this.shield.BackColor = System.Drawing.Color.Transparent;
+            this.shield.BackgroundImage = global::TheQuest.Properties.Resources.shield;
+            this.shield.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.shield.Location = new System.Drawing.Point(110, 163);
+            this.shield.Name = "shield";
+            this.shield.Size = new System.Drawing.Size(30, 30);
+            this.shield.TabIndex = 12;
+            this.shield.TabStop = false;
             // 
-            // iconWizard
+            // wizard
             // 
-            this.iconWizard.BackColor = System.Drawing.Color.Transparent;
-            this.iconWizard.BackgroundImage = global::TheQuest.Properties.Resources.wizard;
-            this.iconWizard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.iconWizard.Location = new System.Drawing.Point(218, 91);
-            this.iconWizard.Name = "iconWizard";
-            this.iconWizard.Size = new System.Drawing.Size(30, 30);
-            this.iconWizard.TabIndex = 13;
-            this.iconWizard.TabStop = false;
+            this.wizard.BackColor = System.Drawing.Color.Transparent;
+            this.wizard.BackgroundImage = global::TheQuest.Properties.Resources.wizard;
+            this.wizard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.wizard.Location = new System.Drawing.Point(218, 91);
+            this.wizard.Name = "wizard";
+            this.wizard.Size = new System.Drawing.Size(30, 30);
+            this.wizard.TabIndex = 13;
+            this.wizard.TabStop = false;
             // 
             // inventorySword
             // 
@@ -264,6 +276,7 @@
             this.inventorySword.Size = new System.Drawing.Size(50, 50);
             this.inventorySword.TabIndex = 14;
             this.inventorySword.TabStop = false;
+            this.inventorySword.Click += new System.EventHandler(this.inventorySword_Click);
             // 
             // inventoryPotionRed
             // 
@@ -275,6 +288,7 @@
             this.inventoryPotionRed.Size = new System.Drawing.Size(50, 50);
             this.inventoryPotionRed.TabIndex = 15;
             this.inventoryPotionRed.TabStop = false;
+            this.inventoryPotionRed.Click += new System.EventHandler(this.inventoryPotionRed_Click);
             // 
             // inventoryBow
             // 
@@ -286,6 +300,7 @@
             this.inventoryBow.Size = new System.Drawing.Size(50, 50);
             this.inventoryBow.TabIndex = 16;
             this.inventoryBow.TabStop = false;
+            this.inventoryBow.Click += new System.EventHandler(this.inventoryBow_Click);
             // 
             // inventoryPotionBlue
             // 
@@ -297,6 +312,7 @@
             this.inventoryPotionBlue.Size = new System.Drawing.Size(50, 50);
             this.inventoryPotionBlue.TabIndex = 17;
             this.inventoryPotionBlue.TabStop = false;
+            this.inventoryPotionBlue.Click += new System.EventHandler(this.inventoryPotionBlue_Click);
             // 
             // inventoryMace
             // 
@@ -308,119 +324,39 @@
             this.inventoryMace.Size = new System.Drawing.Size(50, 50);
             this.inventoryMace.TabIndex = 18;
             this.inventoryMace.TabStop = false;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.8209F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.17911F));
-            this.tableLayoutPanel1.Controls.Add(this.wizardHitPoints, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.ghostHitPoints, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.batHitPoints, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.playerHitPoints, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.ghoulHitPoints, 1, 3);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(460, 212);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(134, 83);
-            this.tableLayoutPanel1.TabIndex = 19;
+            this.inventoryMace.Click += new System.EventHandler(this.inventoryMace_Click);
             // 
             // wizardHitPoints
             // 
             this.wizardHitPoints.AutoSize = true;
-            this.wizardHitPoints.Location = new System.Drawing.Point(51, 64);
+            this.wizardHitPoints.Location = new System.Drawing.Point(51, 17);
             this.wizardHitPoints.Name = "wizardHitPoints";
             this.wizardHitPoints.Size = new System.Drawing.Size(79, 13);
             this.wizardHitPoints.TabIndex = 28;
             this.wizardHitPoints.Text = "wizardHitPoints";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Player";
-            // 
-            // ghostHitPoints
-            // 
-            this.ghostHitPoints.AutoSize = true;
-            this.ghostHitPoints.Location = new System.Drawing.Point(51, 32);
-            this.ghostHitPoints.Name = "ghostHitPoints";
-            this.ghostHitPoints.Size = new System.Drawing.Size(75, 13);
-            this.ghostHitPoints.TabIndex = 27;
-            this.ghostHitPoints.Text = "ghostHitPoints";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 64);
+            this.label5.Location = new System.Drawing.Point(3, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 23;
             this.label5.Text = "Wizard";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 32);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "Ghost";
-            // 
-            // batHitPoints
-            // 
-            this.batHitPoints.AutoSize = true;
-            this.batHitPoints.Location = new System.Drawing.Point(51, 16);
-            this.batHitPoints.Name = "batHitPoints";
-            this.batHitPoints.Size = new System.Drawing.Size(64, 13);
-            this.batHitPoints.TabIndex = 25;
-            this.batHitPoints.Text = "batHitPoints";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 48);
+            this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 22;
             this.label4.Text = "Ghoul";
             // 
-            // playerHitPoints
-            // 
-            this.playerHitPoints.AutoSize = true;
-            this.playerHitPoints.Location = new System.Drawing.Point(51, 0);
-            this.playerHitPoints.Name = "playerHitPoints";
-            this.playerHitPoints.Size = new System.Drawing.Size(77, 13);
-            this.playerHitPoints.TabIndex = 24;
-            this.playerHitPoints.Text = "playerHitPoints";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 13);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Bat";
-            // 
             // ghoulHitPoints
             // 
             this.ghoulHitPoints.AutoSize = true;
-            this.ghoulHitPoints.Location = new System.Drawing.Point(51, 48);
+            this.ghoulHitPoints.Location = new System.Drawing.Point(51, 0);
             this.ghoulHitPoints.Name = "ghoulHitPoints";
             this.ghoulHitPoints.Size = new System.Drawing.Size(75, 13);
             this.ghoulHitPoints.TabIndex = 26;
@@ -448,6 +384,8 @@
             this.moveRight.TabIndex = 3;
             this.moveRight.Text = ">";
             this.moveRight.UseVisualStyleBackColor = true;
+            this.moveRight.Click += new System.EventHandler(this.moveRight_Click);
+            this.moveRight.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.moveRight_PreviewKeyDown);
             // 
             // moveDown
             // 
@@ -457,6 +395,8 @@
             this.moveDown.TabIndex = 2;
             this.moveDown.Text = "v";
             this.moveDown.UseVisualStyleBackColor = true;
+            this.moveDown.Click += new System.EventHandler(this.moveDown_Click);
+            this.moveDown.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.moveDown_PreviewKeyDown);
             // 
             // moveUp
             // 
@@ -466,6 +406,8 @@
             this.moveUp.TabIndex = 1;
             this.moveUp.Text = "^";
             this.moveUp.UseVisualStyleBackColor = true;
+            this.moveUp.Click += new System.EventHandler(this.moveUp_Click);
+            this.moveUp.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.moveUp_PreviewKeyDown);
             // 
             // moveLeft
             // 
@@ -475,6 +417,8 @@
             this.moveLeft.TabIndex = 0;
             this.moveLeft.Text = "<-";
             this.moveLeft.UseVisualStyleBackColor = true;
+            this.moveLeft.Click += new System.EventHandler(this.moveLeft_Click);
+            this.moveLeft.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.moveLeft_PreviewKeyDown);
             // 
             // groupBox1
             // 
@@ -498,6 +442,8 @@
             this.attackRight.TabIndex = 3;
             this.attackRight.Text = ">";
             this.attackRight.UseVisualStyleBackColor = true;
+            this.attackRight.Click += new System.EventHandler(this.attackRight_Click);
+            this.attackRight.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.attackRight_PreviewKeyDown);
             // 
             // attackDown
             // 
@@ -507,6 +453,8 @@
             this.attackDown.TabIndex = 2;
             this.attackDown.Text = "v";
             this.attackDown.UseVisualStyleBackColor = true;
+            this.attackDown.Click += new System.EventHandler(this.attackDown_Click);
+            this.attackDown.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.attackDown_PreviewKeyDown);
             // 
             // attackUp
             // 
@@ -516,6 +464,8 @@
             this.attackUp.TabIndex = 1;
             this.attackUp.Text = "^";
             this.attackUp.UseVisualStyleBackColor = true;
+            this.attackUp.Click += new System.EventHandler(this.attackUp_Click);
+            this.attackUp.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.attackUp_PreviewKeyDown);
             // 
             // attackLeft
             // 
@@ -525,6 +475,8 @@
             this.attackLeft.TabIndex = 0;
             this.attackLeft.Text = "<-";
             this.attackLeft.UseVisualStyleBackColor = true;
+            this.attackLeft.Click += new System.EventHandler(this.attackLeft_Click);
+            this.attackLeft.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.attackLeft_PreviewKeyDown);
             // 
             // inventoryShield
             // 
@@ -536,6 +488,7 @@
             this.inventoryShield.Size = new System.Drawing.Size(50, 50);
             this.inventoryShield.TabIndex = 25;
             this.inventoryShield.TabStop = false;
+            this.inventoryShield.Click += new System.EventHandler(this.inventoryShield_Click);
             // 
             // inventoryQuiver
             // 
@@ -547,6 +500,7 @@
             this.inventoryQuiver.Size = new System.Drawing.Size(50, 50);
             this.inventoryQuiver.TabIndex = 24;
             this.inventoryQuiver.TabStop = false;
+            this.inventoryQuiver.Click += new System.EventHandler(this.inventoryQuiver_Click);
             // 
             // inventoryBattleAxe
             // 
@@ -558,17 +512,188 @@
             this.inventoryBattleAxe.Size = new System.Drawing.Size(50, 50);
             this.inventoryBattleAxe.TabIndex = 23;
             this.inventoryBattleAxe.TabStop = false;
+            this.inventoryBattleAxe.Click += new System.EventHandler(this.inventoryBattleAxe_Click);
             // 
             // inventoryBomb
             // 
             this.inventoryBomb.BackColor = System.Drawing.Color.Transparent;
             this.inventoryBomb.BackgroundImage = global::TheQuest.Properties.Resources.bomb;
             this.inventoryBomb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.inventoryBomb.Location = new System.Drawing.Point(242, 260);
+            this.inventoryBomb.Location = new System.Drawing.Point(186, 260);
             this.inventoryBomb.Name = "inventoryBomb";
             this.inventoryBomb.Size = new System.Drawing.Size(50, 50);
             this.inventoryBomb.TabIndex = 22;
             this.inventoryBomb.TabStop = false;
+            this.inventoryBomb.Click += new System.EventHandler(this.inventoryBomb_Click);
+            // 
+            // actionTimer
+            // 
+            this.actionTimer.Enabled = true;
+            this.actionTimer.Tick += new System.EventHandler(this.actionTimer_Tick);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.8209F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.1791F));
+            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.batHitPoints, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.ghostHitPoints, 1, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(315, 265);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(134, 35);
+            this.tableLayoutPanel2.TabIndex = 26;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(23, 13);
+            this.label2.TabIndex = 21;
+            this.label2.Text = "Bat";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Ghost";
+            // 
+            // batHitPoints
+            // 
+            this.batHitPoints.AutoSize = true;
+            this.batHitPoints.Location = new System.Drawing.Point(51, 0);
+            this.batHitPoints.Name = "batHitPoints";
+            this.batHitPoints.Size = new System.Drawing.Size(64, 13);
+            this.batHitPoints.TabIndex = 26;
+            this.batHitPoints.Text = "batHitPoints";
+            // 
+            // ghostHitPoints
+            // 
+            this.ghostHitPoints.AutoSize = true;
+            this.ghostHitPoints.Location = new System.Drawing.Point(51, 17);
+            this.ghostHitPoints.Name = "ghostHitPoints";
+            this.ghostHitPoints.Size = new System.Drawing.Size(75, 13);
+            this.ghostHitPoints.TabIndex = 28;
+            this.ghostHitPoints.Text = "ghostHitPoints";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.8209F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.1791F));
+            this.tableLayoutPanel3.Controls.Add(this.wizardHitPoints, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.ghoulHitPoints, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label5, 0, 1);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(455, 265);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(134, 35);
+            this.tableLayoutPanel3.TabIndex = 27;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.8209F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.1791F));
+            this.tableLayoutPanel4.Controls.Add(this.playerHitPoints, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(315, 246);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(134, 19);
+            this.tableLayoutPanel4.TabIndex = 28;
+            // 
+            // playerHitPoints
+            // 
+            this.playerHitPoints.AutoSize = true;
+            this.playerHitPoints.Location = new System.Drawing.Point(51, 0);
+            this.playerHitPoints.Name = "playerHitPoints";
+            this.playerHitPoints.Size = new System.Drawing.Size(77, 13);
+            this.playerHitPoints.TabIndex = 25;
+            this.playerHitPoints.Text = "playerHitPoints";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Player";
+            // 
+            // grpbBoxPlayStyle
+            // 
+            this.grpbBoxPlayStyle.BackColor = System.Drawing.Color.Transparent;
+            this.grpbBoxPlayStyle.Controls.Add(this.actionGame);
+            this.grpbBoxPlayStyle.Controls.Add(this.turnBased);
+            this.grpbBoxPlayStyle.Location = new System.Drawing.Point(254, 127);
+            this.grpbBoxPlayStyle.Name = "grpbBoxPlayStyle";
+            this.grpbBoxPlayStyle.Size = new System.Drawing.Size(92, 66);
+            this.grpbBoxPlayStyle.TabIndex = 29;
+            this.grpbBoxPlayStyle.TabStop = false;
+            this.grpbBoxPlayStyle.Text = "Play Style";
+            // 
+            // actionGame
+            // 
+            this.actionGame.AutoSize = true;
+            this.actionGame.Location = new System.Drawing.Point(3, 39);
+            this.actionGame.Name = "actionGame";
+            this.actionGame.Size = new System.Drawing.Size(55, 17);
+            this.actionGame.TabIndex = 1;
+            this.actionGame.Text = "Action";
+            this.actionGame.UseVisualStyleBackColor = true;
+            this.actionGame.CheckedChanged += new System.EventHandler(this.actionGame_CheckedChanged);
+            this.actionGame.Click += new System.EventHandler(this.actionGame_Click);
+            // 
+            // turnBased
+            // 
+            this.turnBased.AutoSize = true;
+            this.turnBased.Checked = true;
+            this.turnBased.Location = new System.Drawing.Point(3, 16);
+            this.turnBased.Name = "turnBased";
+            this.turnBased.Size = new System.Drawing.Size(80, 17);
+            this.turnBased.TabIndex = 0;
+            this.turnBased.TabStop = true;
+            this.turnBased.Text = "Turn-Based";
+            this.turnBased.UseVisualStyleBackColor = true;
+            this.turnBased.CheckedChanged += new System.EventHandler(this.turnBased_CheckedChanged);
+            this.turnBased.Click += new System.EventHandler(this.turnBased_Click);
+            // 
+            // btnSetPlayStyle
+            // 
+            this.btnSetPlayStyle.Location = new System.Drawing.Point(12, 12);
+            this.btnSetPlayStyle.Name = "btnSetPlayStyle";
+            this.btnSetPlayStyle.Size = new System.Drawing.Size(75, 23);
+            this.btnSetPlayStyle.TabIndex = 30;
+            this.btnSetPlayStyle.Text = "Play Style";
+            this.btnSetPlayStyle.UseVisualStyleBackColor = true;
+            this.btnSetPlayStyle.Click += new System.EventHandler(this.btnSetPlayStyle_Click);
+            // 
+            // lblLevel
+            // 
+            this.lblLevel.AutoSize = true;
+            this.lblLevel.BackColor = System.Drawing.Color.Transparent;
+            this.lblLevel.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLevel.Location = new System.Drawing.Point(261, 9);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(51, 23);
+            this.lblLevel.TabIndex = 31;
+            this.lblLevel.Text = "Level";
             // 
             // Form1
             // 
@@ -577,97 +702,107 @@
             this.BackgroundImage = global::TheQuest.Properties.Resources.dungeon600x400;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.lblLevel);
+            this.Controls.Add(this.player);
             this.Controls.Add(this.inventoryShield);
-            this.Controls.Add(this.inventoryQuiver);
-            this.Controls.Add(this.inventoryBattleAxe);
-            this.Controls.Add(this.inventoryBomb);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.move);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.inventoryMace);
             this.Controls.Add(this.inventoryPotionBlue);
             this.Controls.Add(this.inventoryBow);
             this.Controls.Add(this.inventoryPotionRed);
             this.Controls.Add(this.inventorySword);
-            this.Controls.Add(this.iconPlayer);
-            this.Controls.Add(this.iconWizard);
-            this.Controls.Add(this.iconGhost);
-            this.Controls.Add(this.iconGhoul);
-            this.Controls.Add(this.iconBat);
-            this.Controls.Add(this.iconSword);
-            this.Controls.Add(this.iconMace);
-            this.Controls.Add(this.iconShield);
-            this.Controls.Add(this.iconBomb);
-            this.Controls.Add(this.iconQuiver);
-            this.Controls.Add(this.iconBattleAxe);
-            this.Controls.Add(this.iconBow);
-            this.Controls.Add(this.iconPotionRed);
-            this.Controls.Add(this.iconPotionBlue);
+            this.Controls.Add(this.inventoryQuiver);
+            this.Controls.Add(this.inventoryBattleAxe);
+            this.Controls.Add(this.inventoryBomb);
+            this.Controls.Add(this.btnSetPlayStyle);
+            this.Controls.Add(this.grpbBoxPlayStyle);
+            this.Controls.Add(this.tableLayoutPanel4);
+            this.Controls.Add(this.tableLayoutPanel3);
+            this.Controls.Add(this.tableLayoutPanel2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.move);
+            this.Controls.Add(this.wizard);
+            this.Controls.Add(this.ghost);
+            this.Controls.Add(this.ghoul);
+            this.Controls.Add(this.bat);
+            this.Controls.Add(this.sword);
+            this.Controls.Add(this.mace);
+            this.Controls.Add(this.shield);
+            this.Controls.Add(this.bomb);
+            this.Controls.Add(this.quiver);
+            this.Controls.Add(this.battleAxe);
+            this.Controls.Add(this.bow);
+            this.Controls.Add(this.redPotion);
+            this.Controls.Add(this.bluePotion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "The Quest";
-            ((System.ComponentModel.ISupportInitialize)(this.iconPlayer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSword)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconGhoul)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconGhost)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPotionBlue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPotionRed)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconMace)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBattleAxe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconQuiver)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBomb)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconShield)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconWizard)).EndInit();
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDoubleClick);
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ghoul)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ghost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bluePotion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.redPotion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.battleAxe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.quiver)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bomb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shield)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wizard)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventorySword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryPotionRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryPotionBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryMace)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.move.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.inventoryShield)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryQuiver)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBattleAxe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inventoryBomb)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.grpbBoxPlayStyle.ResumeLayout(false);
+            this.grpbBoxPlayStyle.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox iconPlayer;
-        private System.Windows.Forms.PictureBox iconSword;
-        private System.Windows.Forms.PictureBox iconBat;
-        private System.Windows.Forms.PictureBox iconGhoul;
-        private System.Windows.Forms.PictureBox iconGhost;
-        private System.Windows.Forms.PictureBox iconBow;
-        private System.Windows.Forms.PictureBox iconPotionBlue;
-        private System.Windows.Forms.PictureBox iconPotionRed;
-        private System.Windows.Forms.PictureBox iconMace;
-        private System.Windows.Forms.PictureBox iconBattleAxe;
-        private System.Windows.Forms.PictureBox iconQuiver;
-        private System.Windows.Forms.PictureBox iconBomb;
-        private System.Windows.Forms.PictureBox iconShield;
-        private System.Windows.Forms.PictureBox iconWizard;
+        private System.Windows.Forms.PictureBox player;
+        private System.Windows.Forms.PictureBox sword;
+        private System.Windows.Forms.PictureBox bat;
+        private System.Windows.Forms.PictureBox ghoul;
+        private System.Windows.Forms.PictureBox ghost;
+        private System.Windows.Forms.PictureBox bow;
+        private System.Windows.Forms.PictureBox bluePotion;
+        private System.Windows.Forms.PictureBox redPotion;
+        private System.Windows.Forms.PictureBox mace;
+        private System.Windows.Forms.PictureBox battleAxe;
+        private System.Windows.Forms.PictureBox quiver;
+        private System.Windows.Forms.PictureBox bomb;
+        private System.Windows.Forms.PictureBox shield;
+        private System.Windows.Forms.PictureBox wizard;
         private System.Windows.Forms.PictureBox inventorySword;
         private System.Windows.Forms.PictureBox inventoryPotionRed;
         private System.Windows.Forms.PictureBox inventoryBow;
         private System.Windows.Forms.PictureBox inventoryPotionBlue;
         private System.Windows.Forms.PictureBox inventoryMace;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label wizardHitPoints;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label ghostHitPoints;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label batHitPoints;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label playerHitPoints;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label ghoulHitPoints;
         private System.Windows.Forms.GroupBox move;
         private System.Windows.Forms.Button moveRight;
@@ -683,6 +818,21 @@
         private System.Windows.Forms.PictureBox inventoryQuiver;
         private System.Windows.Forms.PictureBox inventoryBattleAxe;
         private System.Windows.Forms.PictureBox inventoryBomb;
+        private System.Windows.Forms.Timer actionTimer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label batHitPoints;
+        private System.Windows.Forms.Label ghostHitPoints;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label playerHitPoints;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox grpbBoxPlayStyle;
+        private System.Windows.Forms.RadioButton actionGame;
+        private System.Windows.Forms.RadioButton turnBased;
+        private System.Windows.Forms.Button btnSetPlayStyle;
+        private System.Windows.Forms.Label lblLevel;
     }
 }
 

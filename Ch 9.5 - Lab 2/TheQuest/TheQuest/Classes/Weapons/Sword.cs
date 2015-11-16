@@ -1,23 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace TheQuest
 {
     class Sword : Weapon
     {
+        #region Properties and Fields
+
         private const int radius = 10;
         private const int damage = 3;
 
         public override string Name { get { return "Sword"; } }
+        #endregion
 
+        #region Initialization
         public Sword(Game game, Point location)
             : base(game, location)
         { }
+        #endregion
 
+        #region Movement
         public override void Attack(Direction direction, Random random)
         {
             if (DamageEnemy(direction, radius, damage, random)) { return; }
@@ -29,32 +31,33 @@ namespace TheQuest
             if (DamageEnemy(CCWDirection(direction), radius, damage, random)) { return; }
         }
 
-        private Direction CCWDirection(Direction direction)
-        {
-            Direction ccwDirection;
-            if (direction -- >= 0)
-            {
-                ccwDirection = direction --;
-            }
-            else
-            {
-                ccwDirection = (Direction)3;
-            }
-            return ccwDirection;
-        }
-
         private Direction CWDirection(Direction direction)
         {
             Direction cwDirection;
-            if ((direction ++) <= (Direction)3)
+            if ((direction - 1) > 0)
             {
-                cwDirection = direction ++;
+                cwDirection = direction - 1;
             }
             else
             {
-                cwDirection = 0;
+                cwDirection = (Direction)4;
             }
             return cwDirection;
         }
+
+        private Direction CCWDirection(Direction direction)
+        {
+            Direction ccwDirection;
+            if ((direction + 1) <= (Direction)4)
+            {
+                ccwDirection = direction + 1;
+            }
+            else
+            {
+                ccwDirection = (Direction)1;
+            }
+            return ccwDirection;
+        }
+        #endregion
     }
 }

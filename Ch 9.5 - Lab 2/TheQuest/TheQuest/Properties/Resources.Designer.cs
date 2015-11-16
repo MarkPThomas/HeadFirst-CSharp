@@ -73,6 +73,16 @@ namespace TheQuest.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Battle_Axe {
+            get {
+                object obj = ResourceManager.GetObject("Battle Axe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap battleaxe {
             get {
                 object obj = ResourceManager.GetObject("battleaxe", resourceCulture);

@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace TheQuest
 {
     abstract class Enemy : Mover
     {
+        #region Properties and Fields
+
+        /// <summary>
+        /// Distance within which an enemy can attack a player.
+        /// </summary>
         private const int NearPlayerDistance = 25;
 
         public int HitPoints { get; private set; }
-        public bool Dead {
-            get {
+        public bool Dead
+        {
+            get
+            {
                 if (HitPoints <= 0)
                 {
                     return true;
@@ -25,18 +28,19 @@ namespace TheQuest
             }
         }
 
-        public Enemy(Game game, Point location, int hitPoints)
-            : base(game, location)
-        {
-            HitPoints = HitPoints;
-        }
+        #endregion
 
+        #region Initialization
+        public Enemy(Game game, Point location, int hitPoints)
+       : base(game, location)
+        {
+            HitPoints = hitPoints;
+        }
+        #endregion
+
+        #region Movement
         public abstract void Move(Random random);
 
-        public void Hit(int maxDamage, Random random)
-        {
-            HitPoints -= random.Next(1, maxDamage);
-        }
 
         protected bool NearPlayer()
         {
@@ -48,11 +52,11 @@ namespace TheQuest
             Direction directionToMove;
             if (playerLocation.X > location.X + 10)
             {
-                directionToMove = Direction.Right; 
+                directionToMove = Direction.Right;
             }
             else if (playerLocation.X < location.X - 10)
             {
-                directionToMove = Direction.Left; 
+                directionToMove = Direction.Left;
             }
             else if (playerLocation.Y < location.Y - 10)
             {
@@ -65,5 +69,13 @@ namespace TheQuest
 
             return directionToMove;
         }
+        #endregion
+
+        #region Action
+        public void Hit(int maxDamage, Random random)
+        {
+            HitPoints -= random.Next(1, maxDamage);
+        }
+        #endregion
     }
 }

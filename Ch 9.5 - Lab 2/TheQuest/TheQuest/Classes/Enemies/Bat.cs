@@ -1,32 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace TheQuest
 {
     class Bat : Enemy
     {
+        #region Properties and Fields
+
         private const int damage = 2;
         private const int hitPoints = 6;
+        #endregion
 
+        #region Initialization
         public Bat(Game game, Point location)
             : base(game, location, hitPoints)
         { }
+        #endregion
 
+        #region Movement
         public override void Move(Random random)
         {
             if (Dead) { return; }
 
             if (random.Next(2) == 0)
             {
-                Move(FindPlayerDirection(game.PlayerLocation), game.Boundaries);
+                location = Move(FindPlayerDirection(game.PlayerLocation), game.Boundaries);
             }
             else
             {
-                Move((Direction)random.Next(3), game.Boundaries);
+                location = Move((Direction)random.Next(1, 4), game.Boundaries);
             }
 
             if (NearPlayer())
@@ -34,5 +36,6 @@ namespace TheQuest
                 game.HitPlayer(damage, random);
             }
         }
+        #endregion
     }
 }
