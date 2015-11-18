@@ -32,21 +32,11 @@ namespace SloppyJoes
                 if (value > 0 && _numberofItems != value)
                 {
                     _numberofItems = value;
-                    OnPropertyChanged("NumberOfItems");
                 }
             }
         }
 
-        private ObservableCollection<MenuItem> _menu;
-        public ObservableCollection<MenuItem> Menu
-        {
-            get { return _menu; }
-            private set
-            {
-                _menu = value;
-                OnPropertyChanged("Menu");
-            }
-        }
+        public ObservableCollection<MenuItem> Menu { get; private set; }
 
         private DateTime _generatedDate;
         public DateTime GeneratedDate
