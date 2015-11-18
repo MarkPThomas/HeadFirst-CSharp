@@ -30,8 +30,43 @@
         </StackPanel>
 
         <ListView ItemsSource="{Binding Menu}" 
-                      Margin="0,0,20,0"/>
-        
+                      Margin="0,0,20,0">
+            <ListView.ItemTemplate>
+                <!-- Data Template Option 1 -->
+                <!--<DataTemplate>
+                    -->
+                <!-- Adding a {Binding} without a path just calls the ToSTring() method of the bound object. -->
+                <!--
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>-->
+
+                <!-- Data Template Option 2 -->
+                <!--<DataTemplate>
+                    <TextBlock>
+                -->
+                <!-- You can bind individual Run tags. -->
+                <!--<Run Text="{Binding Meat}" Foreground="Blue" /><Run Text=" on " />
+                        <Run Text="{Binding Bread}" FontWeight="Light" /><Run Text=" with " />
+                        <Run Text="{Binding Condiment}" Foreground="Red" FontWeight="ExtraBold"/>
+                    </TextBlock>
+                </DataTemplate>-->
+
+                <!-- Data Template Option 3 -->
+                <DataTemplate>
+                    <!-- The DataTemplate object's contents can hold only one object.
+                        So if you want multiple controls in it, you'll need to use a container like StackPanel-->
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Bread}" Foreground="Brown" FontWeight="Light"/>
+                            <TextBlock Text="{Binding Meat}" Foreground="Red" FontWeight="Bold"/>
+                        </StackPanel>
+                        <Ellipse Fill="DarkSlateBlue" Height="Auto" Width="10" Margin="10,0" />
+                        <Button Content="{Binding Condiment}" FontFamily="Segoe Script" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
         <TextBlock>
                 <Run Text="This menu was generated on "/>
                 <Run Text="{Binding GeneratedDate}" />
