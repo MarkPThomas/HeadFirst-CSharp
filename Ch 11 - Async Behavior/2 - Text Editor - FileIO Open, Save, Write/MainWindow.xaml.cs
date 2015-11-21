@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using System.Runtime.Serialization;
 using System.ComponentModel;
@@ -35,7 +34,7 @@ namespace LessSimpleTextEditor
 
         private IAsyncResult asyncResult;
         private const string FILTER = "Text File (*.txt)|*.txt|XML File (*.xml)|*.xml|XML File (*.xaml)|*.xaml";
-        private string initialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        private string initialDirectory = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
         private string lastDirectory;
 
         private LoadMethod loadMethod;
@@ -48,7 +47,7 @@ namespace LessSimpleTextEditor
             filename.Text = fileNameText;
             status.Text = "";
             menu.Height = 10;
-            lineByLine.IsChecked = true;
+            fileAtOnce.IsChecked = true;
 
             ResetDirectory();
         }
