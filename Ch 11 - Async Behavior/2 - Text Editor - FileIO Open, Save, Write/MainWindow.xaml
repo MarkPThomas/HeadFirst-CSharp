@@ -1,0 +1,75 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LessSimpleTextEditor"
+        xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" x:Class="LessSimpleTextEditor.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        Background="#FF453F4D">
+    <Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Height="Auto">
+                <TextBlock x:Name="filename" Margin="10,10,10,0" FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="20" Foreground="#FFE6E17E">
+                    <Run Text="Untitled"/>
+                </TextBlock>
+                <TextBlock x:Name="status" 
+                           Margin="10,10,10,0"
+                           FontFamily="Comic Sans MS" FontWeight="Bold" FontSize="20" Foreground="Green" 
+                           Text="Test" />
+            </StackPanel>
+            <Border Grid.Row="1" Margin="10" >
+                <TextBox x:Name="text"
+                            VerticalAlignment="Stretch"
+                            AcceptsReturn="True"
+				            ScrollViewer.VerticalScrollBarVisibility="Visible"
+				            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+				            TextChanged="text_TextChanged" />
+            </Border>
+            <StackPanel x:Name="menu"  Orientation="Vertical" Grid.Row="2" VerticalAlignment="Bottom"
+                        MouseEnter="menu_MouseEnter"
+                        MouseLeave="menu_MouseLeave">
+                <StackPanel x:Name="menuBar"  Background="#FFBEBBFF" Height="10"/>
+                <StackPanel x:Name="menuButtons"  Orientation="Horizontal" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                            Background="#FF585174">
+                    <Border  BorderThickness="1" BorderBrush="Black">
+                        <StackPanel x:Name="openButton" Width="75" 
+                                Background="Azure" 
+                                MouseDown="openButton_MouseDown"
+                                MouseEnter="openButton_MouseEnter"
+                                MouseLeave="openButton_MouseLeave" 
+                                MouseUp="openButton_MouseUp">
+                            <TextBlock Text="Open" HorizontalAlignment="Center" Margin="0,15"/>
+                        </StackPanel>
+                    </Border>
+                    <Border  BorderThickness="1" BorderBrush="Black">
+                        <StackPanel x:Name="saveButton"  Width="75" 
+                                    Background="Azure" 
+                                MouseDown="saveButton_MouseDown"
+                                MouseEnter="saveButton_MouseEnter"
+                                MouseLeave="saveButton_MouseLeave" 
+                                MouseUp="saveButton_MouseUp">
+                            <TextBlock Text="Save" HorizontalAlignment="Center" Margin="0,15"/>
+                        </StackPanel>
+                    </Border>
+                    <GroupBox Header="Load Method"  Margin="5,1"  Foreground="#FF38ADC7" BorderBrush="White" BorderThickness="1" Background="#FF675B9B">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton x:Name="lineByLine" Content="By Line" GroupName="loadMethod" Margin="5" Checked="lineByLine_Checked"/>
+                            <RadioButton x:Name="blockByBlock" Content="By Block" GroupName="loadMethod" Margin="5" Checked="blockByBlock_Checked" />
+                            <RadioButton x:Name="fileAtOnce" Content="By File" GroupName="loadMethod" Margin="5" Checked="fileAtOnce_Checked" />
+                        </StackPanel>
+                    </GroupBox>
+                    
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</Window>
