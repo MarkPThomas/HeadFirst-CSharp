@@ -43,7 +43,6 @@ namespace GuyXMLSerializer
         public Guy NewGuy { get; set; }
         public string GuyFile { get; set; }
 
-        //public string
 
         public void ReadGuy()
         {

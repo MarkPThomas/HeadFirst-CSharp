@@ -71,7 +71,7 @@ namespace GuyXMLSerializer
                 FileName = fileName,
                 InitialDirectory = directory,
                 CheckPathExists = true,
-                CheckFileExists = false
+                CheckFileExists = true
             };
 
 
