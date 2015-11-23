@@ -33,18 +33,18 @@ namespace ExcuseManager
         }
 
         public void OpenFile(string path) {
-            ExcusePath = path;
+                ExcusePath = path;
 
-            Excuse fileExcuse;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (Stream input = File.OpenRead(path))
-            {
-                fileExcuse = (Excuse)bf.Deserialize(input);
-            }
+                Excuse fileExcuse;
+                BinaryFormatter bf = new BinaryFormatter();
+                using (Stream input = File.OpenRead(path))
+                {
+                    fileExcuse = (Excuse)bf.Deserialize(input);
+                }
 
-            Description = fileExcuse.Description;
-            Results = fileExcuse.Results;
-            LastUsed = fileExcuse.LastUsed;
+                Description = fileExcuse.Description;
+                Results = fileExcuse.Results;
+                LastUsed = fileExcuse.LastUsed;
         }
 
         public void Save(string path) {
