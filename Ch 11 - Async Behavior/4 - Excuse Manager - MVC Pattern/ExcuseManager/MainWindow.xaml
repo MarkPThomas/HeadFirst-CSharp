@@ -126,15 +126,6 @@
                         <Setter Property="Source" Value="{StaticResource iconQuestion}"/>
                     </MultiTrigger.Setters>
                 </MultiTrigger>
-                <!--<Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Source" Value="{StaticResource iconQuestionDisabled}"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Source" Value="{StaticResource iconQuestionMO}"/>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="False">
-                    <Setter Property="Source" Value="{StaticResource iconQuestion}"/>
-                </Trigger>-->
             </Style.Triggers>
         </Style>
 

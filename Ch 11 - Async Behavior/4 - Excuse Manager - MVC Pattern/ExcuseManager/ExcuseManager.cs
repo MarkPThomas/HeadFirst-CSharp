@@ -97,8 +97,8 @@ namespace ExcuseManagerApp
             {
                 excuseFile = files[random.Next(0, files.Count())];
                 await ReadExcuseAsync();
+                OnPropertyChanged("CurrentExcuse");
             }
-            OnPropertyChanged("CurrentExcuse");
         }
 
         public async Task UpdateFileDateAsync()
