@@ -1,0 +1,89 @@
+﻿<Window x:Class="BeehiveManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeehiveManagement"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="430" Width="525"
+        Background="Yellow"
+        ResizeMode="NoResize">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Margin="5">
+                <TextBlock Text="Worker Bee Assignments" Margin="0,0,0,5"/>
+                <Border BorderThickness="1" BorderBrush="Black">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0"  VerticalAlignment="Bottom">
+                            <TextBlock Text="Job" />
+                            <ComboBox x:Name="workerBeeJob" SelectedIndex="0">
+                                <ComboBoxItem Content="Nectar Collector"/>
+                                <ComboBoxItem Content="Honey Manufacturing" />
+                                <ComboBoxItem Content="Egg Care" />
+                                <ComboBoxItem Content="Baby Bee Tutoring" />
+                                <ComboBoxItem Content="Hive Maintenance" />
+                                <ComboBoxItem Content="Sting Patrol" />
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" >
+                            <TextBlock Text="Shifts" />
+                            <TextBox x:Name="shifts" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
+                            <Button x:Name="assignJob" Content="Assign this Job to a Bee" Click="assignJob_Click" 
+                                Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Button x:Name="nextShift" Content="Work the Next Shift" 
+                    HorizontalAlignment="Right"
+                    FontSize="18"
+                    Margin="0,20,20,0" Click="nextShift_Click"/>
+                <TextBlock Text="Shift Report" Margin="0,10,0,5"/>
+                <Border BorderThickness="1"  BorderBrush="Black" Height="100">
+                    <ScrollViewer x:Name="report"
+                              BorderBrush="White"
+                              BorderThickness="2"
+                              Background="White"/>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left"
+                        Margin="10,5" >
+                <Button x:Name="consumeHoney" 
+                        Content="Consume Honey" 
+                        Width="100"
+                        Click="consumeHoney_Click"/>
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5">
+                    <Button x:Name="processNectar" 
+                        Content="Process Nectar" 
+                        Width="100"
+                        Margin="10,0" 
+                            Click="processNectar_Click"/>
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="Left">
+                        <Button x:Name="processNectarVatEmpty" 
+                            Content="Process Nectar: Empty Vat" 
+                            Width="160"
+                            Margin="10,5"
+                            HorizontalAlignment="Left"
+                            Click="processNectarVatEmpty_Click" />
+                        <Button x:Name="processNectarLogError" 
+                            Content="Process Nectar: Without Log" 
+                            Width="160"
+                            Margin="10,5" 
+                            HorizontalAlignment="Left"
+                            Click="processNectarLogError_Click" />
+                        <Button x:Name="processNectarIOProblem" 
+                            Content="Process Nectar: With NonExisting Log File" 
+                            Width="250"
+                            Margin="10,5" 
+                            HorizontalAlignment="Left"
+                            Click="processNectarIOProblem_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
