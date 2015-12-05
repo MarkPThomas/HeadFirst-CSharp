@@ -1,0 +1,160 @@
+﻿<Window x:Class="ComicCollections.QueryDetailZoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComicCollections"
+        mc:Ignorable="d"
+        Title="Query Detail" 
+        SizeToContent="WidthAndHeight"
+        Background="#FF2C2C2C"
+        MaxHeight="700" MaxWidth="1200">
+    <Window.Resources>
+        <local:ComicQueryManager x:Key="comicQueryManager" />
+
+        <Style x:Key="BodyTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="SubHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource SubHeaderTextBlockStyle}">
+            <Setter Property="Foreground" Value="Yellow"/>
+        </Style>
+
+        <Style x:Key="CaptionTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="Foreground" Value="Beige" />
+        </Style>
+    </Window.Resources>
+    <Grid Grid.Row="1" Margin="10" DataContext="{StaticResource ResourceKey=comicQueryManager}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Style="{StaticResource SubHeaderTextBlockStyle}"
+                   Grid.Row="0" Grid.Column="0"
+                   Text="Query Results"
+                   Margin="10,0,0,20" />
+
+        <ListView  Grid.Row="1" Grid.Column="0"
+                   ItemsSource="{Binding CurrentQueryResults}" 
+                   Margin="0,-10,0,0"
+                   SelectionMode="Single"
+                   Background="Black" SelectionChanged="ListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Image Source="{Binding ImagePath}" Stretch="UniformToFill" />
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+
+                            <TextBlock Text="{Binding Title}"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       TextWrapping="NoWrap" 
+                                       MaxHeight="40"/>
+
+                            <TextBlock Text="{Binding Subtitle}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="NoWrap"/>
+
+                            <TextBlock Text="{Binding Description}"
+                                       Style="{StaticResource BodyTextBlockStyle}"
+                                       TextWrapping="NoWrap"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView  x:Name="detailListView"
+                    Grid.Row="1" Grid.Column="1"
+                   ItemsSource="{Binding CurrentQueryResults}" 
+                   Margin="0,-10,0,0"
+                   SelectionMode="Single"
+                   Background="#FF2C2C2C">
+            <ListView.ItemContainerStyle>
+               <!--This prevents the list from being selectable-->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="false"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="780" Width="600" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="{Binding Comic.Cover}" 
+                               Margin="0,0,20,0"
+                               Stretch="UniformToFill" 
+                               Width="326" Height="500"
+                               VerticalAlignment="Top"/>
+                        <StackPanel Grid.Column="1">
+
+                            <TextBlock Text="Name"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.Name}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+
+                            <TextBlock Text="Issue"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.Issue}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+
+                            <TextBlock Text="Year"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.Year}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+
+                            <TextBlock Text="Cover Price"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.CoverPrice}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+
+                            <TextBlock Text="Main Villain"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.MainVillain}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+
+                            <TextBlock Text="Synopsis"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Margin="0,10,0,0"
+                                       TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Comic.Synopsis}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
