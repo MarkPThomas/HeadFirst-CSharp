@@ -57,8 +57,10 @@
     </ApplicationDefinition>
     <Compile Include="Comic.cs" />
     <Compile Include="ComicQuery.cs" />
-    <Compile Include="QueryDetail.xaml.cs">
-      <DependentUpon>QueryDetail.xaml</DependentUpon>
+    <Compile Include="PriceRange.cs" />
+    <Compile Include="Purchase.cs" />
+    <Compile Include="QueryDetailZoom.xaml.cs">
+      <DependentUpon>QueryDetailZoom.xaml</DependentUpon>
     </Compile>
     <Compile Include="ComicQueryManager.cs" />
     <Page Include="MainWindow.xaml">
@@ -73,7 +75,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="QueryDetail.xaml">
+    <Page Include="QueryDetailZoom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

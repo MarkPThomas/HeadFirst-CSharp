@@ -15,21 +15,31 @@ using System.Windows.Shapes;
 namespace ComicCollections
 {
     /// <summary>
-    /// Interaction logic for QueryDetail.xaml
+    /// Interaction logic for QueryZoomDetail.xaml
     /// </summary>
-    public partial class QueryDetail : Window
+    public partial class QueryDetailZoom : Window
     {
-        private ComicQueryManager comicQueryManager = new ComicQueryManager();
+        private ComicQueryManager comicQueryManager;
 
-        public QueryDetail(ComicQuery comicQuery)
+        public QueryDetailZoom(ComicQuery comicQuery)
         {
+            InitializeComponent();
+
+            comicQueryManager = FindResource("comicQueryManager") as ComicQueryManager;
+
             if (comicQuery != null)
             {
                 comicQueryManager.UpdateQueryResults(comicQuery);
                 Title = comicQueryManager.Title;
             }
+        }
 
-            InitializeComponent();
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 1)
+            {
+                detailListView.ScrollIntoView(e.AddedItems[0]);
+            }
         }
     }
 }

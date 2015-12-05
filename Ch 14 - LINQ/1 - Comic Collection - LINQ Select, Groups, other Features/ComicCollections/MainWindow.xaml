@@ -5,27 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ComicCollections"
         mc:Ignorable="d"
-        Title="Jimmy's Comics" Height="350" Width="525">
+        Title="Jimmy's Comics"  
+        SizeToContent="WidthAndHeight"
+        Background="#FF2C2C2C"
+        MaxHeight="700" MaxWidth="1200">
     <Window.Resources>
         <local:ComicQueryManager x:Key="comicQueryManager" />
 
-        <Style x:Key="SubHeaderTextBlockStyle" TargetType="TextBlock">
-
+        <Style x:Key="BodyTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
         </Style>
 
-        <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
-            
+        <Style x:Key="SubHeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource SubHeaderTextBlockStyle}">
+            <Setter Property="Foreground" Value="Yellow"/>
+        </Style>
+        
     </Window.Resources>
     <Grid Margin="10" DataContext="{StaticResource ResourceKey=comicQueryManager}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
-
         <ListView  ItemsSource="{Binding AvailableQueries}" 
                    SelectionMode="Single" 
-                   SelectionChanged="ListView_SelectionChanged">
+                   SelectionChanged="ListView_SelectionChanged" 
+                   Background="Black">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="55" Margin="6">
@@ -38,10 +46,13 @@
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
                             <TextBlock Text="{Binding Title}"
+                                       Style="{StaticResource TitleTextBlockStyle}"
                                        TextWrapping="NoWrap"/>
                             <TextBlock Text="{Binding Subtitle}"
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"
                                        TextWrapping="NoWrap" />
                             <TextBlock Text="{Binding Description}"
+                                       Style="{StaticResource BodyTextBlockStyle}"
                                        TextWrapping="NoWrap" />
                         </StackPanel>
                     </Grid>
@@ -50,7 +61,14 @@
         </ListView>
         <ListView Grid.Column="1" 
                   SelectionMode="Single"
-                  ItemsSource="{Binding CurrentQueryResults}">
+                  ItemsSource="{Binding CurrentQueryResults}" 
+                  Background="#FF2C2C2C">
+            <ListView.ItemContainerStyle>
+                <!--This prevents the list from being selectable-->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="false"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -60,7 +78,8 @@
                                Width="25" Height="25"
                                VerticalAlignment="Top" HorizontalAlignment="Right" />
                         <StackPanel>
-                            <TextBlock Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Title}" 
+                                       Style="{StaticResource SubHeaderTextBlockStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

@@ -21,6 +21,7 @@ namespace ComicCollections
     public partial class MainWindow : Window
     {
         private ComicQueryManager comicQueryManager;
+        private string title = "Jimmy's Comics";
 
         public MainWindow()
         {
@@ -28,6 +29,7 @@ namespace ComicCollections
 
             comicQueryManager = FindResource("comicQueryManager") as ComicQueryManager;
             comicQueryManager.UpdateQueryResults(comicQueryManager.AvailableQueries[0]);
+            Title = title;
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,14 +38,15 @@ namespace ComicCollections
             {
                 comicQueryManager.CurrentQueryResults.Clear();
                 comicQueryManager.UpdateQueryResults(e.AddedItems[0] as ComicQuery);
-            }
+                Title = title + ": " + comicQueryManager.Title;
 
-            //ComicQuery query = e.AddedItems[0] as ComicQuery;
-            //if (query != null)
-            //{
-            //    QueryDetail queryDetail = new QueryDetail(query);
-            //    queryDetail.Show();
-            //}
+                ComicQuery query = e.AddedItems[0] as ComicQuery;
+                if (query.Title == "All comics in the collection")
+                {
+                    QueryDetailZoom allComics = new QueryDetailZoom(query);
+                    allComics.Show();
+                }
+            }
         }
     }
 }
