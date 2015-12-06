@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 namespace Baseball
 {
     class Ball
-    { 
-        public event EventHandler BallInPlay;
+    {
+        // Event Handler Method
+        // public event EventHandler BallInPlay;
+
+        // Generic Event Handler Method
+        // Communicates what sort of event argument should be supplied to the event.
+        public event EventHandler<BallEventArgs> BallInPlay;
         public void OnBallInPlay(BallEventArgs e)
         {
-            EventHandler ballInPlay = BallInPlay;
+            EventHandler<BallEventArgs> ballInPlay = BallInPlay;
             if (ballInPlay != null)
             {
                 ballInPlay(this, e);

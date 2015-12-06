@@ -14,7 +14,11 @@ namespace Baseball
 
         public Fan(Ball ball)
         {
-            ball.BallInPlay += Ball_BallInPlay;
+            // Event Handler Method
+            // ball.BallInPlay += Ball_BallInPlay;
+
+            // Generic Event Handler
+            ball.BallInPlay += new EventHandler<BallEventArgs> (Ball_BallInPlay);
         }
 
         private void Ball_BallInPlay(object sender, EventArgs e)
