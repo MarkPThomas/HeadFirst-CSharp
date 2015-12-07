@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Baseball
 {
+    // Callback Pattern:
+    // When one object passes a reference to a method to another object so it - and only it - can return information.
+    // Events let any method subscribe to your object's events anonymously.
     delegate void BatCallback(BallEventArgs e);
 
     class Bat
