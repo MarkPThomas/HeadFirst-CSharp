@@ -1,0 +1,56 @@
+﻿<Window x:Class="RoutedEvents.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RoutedEvents"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="panel" MouseDown="panel_MouseDown">
+            <Border x:Name="border" 
+                    BorderThickness="10"
+                    BorderBrush="Blue"
+                    Width="155"
+                    Margin="20"
+                    MouseDown="border_MouseDown">
+                <Grid x:Name="grid"
+                      MouseDown="grid_MouseDown">
+                    <!-- Grid will not respond as a source of events when clicked unless it has fill or a background.
+                         Such properties can be transparent.-->
+                    <Ellipse Fill="Red"
+                             Width="100" Height="100"
+                             MouseDown="Ellipse_MouseDown" />
+                    <Rectangle x:Name="grayRectangle" 
+                               Fill="Gray" 
+                               Width="50" Height="50"
+                               MouseDown="grayRectangle_MouseDown" />
+                </Grid>
+            </Border>
+            <ListBox x:Name="output"
+                     BorderThickness="1" 
+                     Width="250" Height="140"
+                     Margin="0,0,20,0" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <CheckBox x:Name="borderSetsHandled"
+                    Content="Border sets handled" />
+            <CheckBox x:Name="gridSetsHandled"
+                    Content="Grid sets handled" />
+            <CheckBox x:Name="ellipseSetsHandled"
+                    Content="Ellipse sets handled" />
+            <CheckBox x:Name="rectangleSetsHandled"
+                    Content="Rectangle sets handled" />
+            <Button x:Name="updateHitTestButton"
+                    Content="Update Rectangle IsHitTestVisible"
+                    Margin="0,20,20,0" Click="UpdateHitTestButton"/>
+            <CheckBox x:Name="newHitTestVisibleValue"
+                      Content="New IsHitTestVisible value"
+                      IsChecked="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
