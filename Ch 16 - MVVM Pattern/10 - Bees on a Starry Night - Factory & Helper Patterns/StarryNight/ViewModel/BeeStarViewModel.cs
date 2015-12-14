@@ -39,12 +39,22 @@ namespace StarryNight.ViewModel
         
         public BeeStarViewModel()
         {
+            _model.BeeMoved += BeeMovedHandler;
+            _model.StarChanged += StarChangedHandler;
 
+            _timer.Interval = TimeSpan.FromSeconds(2);
+            _timer.Tick += timer_Tick;
+            _timer.Start();
         }
 
         void timer_Tick(object sender, object e)
         {
+            foreach (StarControl starControl in _fadedStars)
+            {
+                _sprites.Remove(starControl);
+            }
 
+            _model.Update();
         }
 
         void BeeMovedHandler(object sender, BeeMovedEventArgs e)

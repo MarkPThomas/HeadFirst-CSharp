@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace StarryNight.View
 {
@@ -27,12 +28,14 @@ namespace StarryNight.View
 
         public void FadeIn()
         {
-            
+            Storyboard fadeInStoryBoard = FindResource("fadeInStoryBoard") as Storyboard;
+            fadeInStoryBoard.Begin();
         }
 
         public void FadeOut()
         {
-
+            Storyboard fadeOutStoryBoard = FindResource("fadeOutStoryBoard") as Storyboard;
+            fadeOutStoryBoard.Begin();
         }
     }
 }
