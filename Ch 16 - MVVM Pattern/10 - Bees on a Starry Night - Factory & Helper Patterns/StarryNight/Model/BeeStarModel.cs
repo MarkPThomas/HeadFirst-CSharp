@@ -57,8 +57,8 @@ namespace StarryNight.Model
             }
             else
             {
-                int numBees = _random.Next(5, 16);
-                for (int i = 5; i <= numBees; i++)
+                int numBees = _random.Next(5, 15);
+                for (int i = 5; i < numBees; i++)
                 {
                     CreateABee();
                 }
@@ -67,7 +67,7 @@ namespace StarryNight.Model
 
         private void MoveOneBee(Bee bee = null)
         {
-            if (_bees.Count == 0)
+            if (_bees.Keys.Count == 0)
             {
                 return;
             }
@@ -76,22 +76,17 @@ namespace StarryNight.Model
                 bee = _bees.Keys.ToList()[_random.Next(_bees.Count)];
             }
 
-            Point newLocation = FindNonOverlappingPoint(bee.Size);
-            bee.Location = newLocation;
-
-            Point beeLocation = _bees[bee];
-            beeLocation.X = newLocation.X;
-            beeLocation.Y = newLocation.Y;
-
-            OnBeeMoved(bee, newLocation.X, newLocation.Y);
+            bee.Location = FindNonOverlappingPoint(bee.Size);
+            _bees[bee] = bee.Location;
+            
+            OnBeeMoved(bee, bee.Location.X, bee.Location.Y);
         }
 
         private void CreateABee()
         {
-            Size beeSize = new Size();
-            beeSize.Width = _random.Next(40, 151);
-            beeSize.Height = _random.Next(40, 151);
-
+            int size = _random.Next(40, 150);
+            Size beeSize = new Size(size, size);
+            
             Point beeLocation = FindNonOverlappingPoint(beeSize);
 
             Bee newBee = new Bee(beeLocation, beeSize);
@@ -116,8 +111,8 @@ namespace StarryNight.Model
             }
             else
             {
-                int numStars = _random.Next(5, 11);
-                for (int i = 5; i <= numStars; i++)
+                int numStars = _random.Next(5, 10);
+                for (int i = 0; i <= numStars; i++)
                 {
                     CreateAStar();
                 }
@@ -126,7 +121,7 @@ namespace StarryNight.Model
 
         private void MoveOneStar(Star star = null)
         {
-            if (_stars.Count == 0)
+            if (_stars.Keys.Count == 0)
             {
                 return;
             }
@@ -135,8 +130,7 @@ namespace StarryNight.Model
                 star = _stars.Keys.ToList()[_random.Next(_stars.Count)];
             }
 
-            Point starLocation = FindNonOverlappingPoint(StarSize);
-            star.Location = starLocation;
+            star.Location = FindNonOverlappingPoint(StarSize);
             OnStarChanged(star, removed: false);
         }
 
@@ -153,24 +147,13 @@ namespace StarryNight.Model
 
         private void AddOrRemoveAStar()
         {
-            if (_stars.Count <= 5)
-            {
+            if (((_random.Next(2) == 0) || (_stars.Count <= 5)) && (_stars.Count < 20))
+            { 
                 CreateAStar();
             }
-            else if (_stars.Count >= 20)
+            else 
             {
                 RemoveAStar();
-            }
-            else
-            {
-                if (_random.Next(2) == 0)
-                {
-                    CreateAStar();
-                }
-                else
-                {
-                    RemoveAStar();
-                }
             }
         }
 
@@ -198,21 +181,29 @@ namespace StarryNight.Model
         private Point FindNonOverlappingPoint(Size size)
         {
             Point randomPoint = new Point();
-            for (int i = 0; i < 1000; i++)
+            if ((int)PlayAreaSize.Width > 0 && (int)PlayAreaSize.Height > 0)
             {
-                randomPoint = new Point(Math.Max(0, _random.Next((int)PlayAreaSize.Width) - size.Width), Math.Max(0, _random.Next((int)PlayAreaSize.Height) - size.Height));
-                Rect randomPosition = new Rect(randomPoint, size);
-
-                var bees = from bee in _bees
-                           where RectsOverlap(bee.Key.Position, randomPosition)
-                           select bee.Key;
-                if (bees.Count() == 0)
+                for (int i = 0; i < 1000; i++)
                 {
-                    var stars = from star in _stars
-                               where RectsOverlap(new Rect(star.Value, StarSize), randomPosition)
-                               select star.Key;
+                    randomPoint = new Point(Math.Max(1, _random.Next((int)PlayAreaSize.Width) - size.Width), Math.Max(1, _random.Next((int)PlayAreaSize.Height) - size.Height));
+                    Rect randomPosition = new Rect(randomPoint, size);
+
+                    var bees = from bee in _bees.Keys
+                               where RectsOverlap(bee.Position, randomPosition)
+                               select bee;
+
+                    var stars = from star in _stars.Keys
+                                where RectsOverlap(new Rect(star.Location.X, star.Location.Y, StarSize.Width, StarSize.Height),
+                                                     randomPosition)
+                                select star;
+
+                    if (bees.Count() + stars.Count() == 0)
+                    {
+                        return randomPoint;
+                    }
                 }
             }
+            
             return randomPoint;
         }
 

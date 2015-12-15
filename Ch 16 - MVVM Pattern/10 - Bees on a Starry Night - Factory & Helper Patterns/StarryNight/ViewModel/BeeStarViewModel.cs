@@ -7,10 +7,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Threading;
 // using DispatcherTimer = System.Windows.Threading.DispatcherTimer;
-// using DispatcherTimer = Windows.UI.Xaml.DispatcherTimer;
 using System.Windows;
 // using UIElement = System.Windows.UIElement;
-// using UIElement = Windows.UI.Xaml.UIElement;
+
 
 namespace StarryNight.ViewModel
 {
@@ -59,12 +58,58 @@ namespace StarryNight.ViewModel
 
         void BeeMovedHandler(object sender, BeeMovedEventArgs e)
         {
+            AnimatedImage beeControl = null;
+            if (_bees.ContainsKey(e.BeeThatMoved))
+            {
+                beeControl = _bees[e.BeeThatMoved];
+            }
 
+            if (beeControl == null)
+            {
+                beeControl = BeeStarHelper.BeeFactory(e.BeeThatMoved.Width, e.BeeThatMoved.Height, TimeSpan.FromMilliseconds(20));
+                BeeStarHelper.SetCanvasLocation(beeControl, e.X, e.Y);
+                _bees.Add(e.BeeThatMoved, beeControl);
+                _sprites.Add(beeControl);
+            }
+            else
+            {
+                BeeStarHelper.MoveElementOnCanvas(beeControl, e.X, e.Y);
+            }
         }
 
         void StarChangedHandler(object sender, StarChangedEventArgs e)
         {
-            
+            StarControl starControl = null;
+            if (_stars.ContainsKey(e.StarThatChanged))
+            {
+                starControl = _stars[e.StarThatChanged];
+            }
+
+            if (e.Removed && starControl != null)
+            {    
+                _fadedStars.Add(starControl);
+                _stars.Remove(e.StarThatChanged);
+                starControl.FadeOut();
+                return;
+            }
+            else if (starControl == null)
+            {
+                starControl = new StarControl();
+                if (_stars.ContainsKey(e.StarThatChanged))
+                {
+                    _stars[e.StarThatChanged] = starControl;
+                }
+                else
+                {
+                    _stars.Add(e.StarThatChanged, starControl);
+                }            
+                _sprites.Add(starControl);
+
+                starControl.FadeIn();
+                BeeStarHelper.SendToBack(starControl);
+            }
+
+            BeeStarHelper.SetCanvasLocation(starControl, e.StarThatChanged.Location.X, e.StarThatChanged.Location.Y);
         }
     }
 }

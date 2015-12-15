@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StarryNight.View"
         xmlns:viewModel="clr-namespace:StarryNight.ViewModel"
         mc:Ignorable="d"
-        Title="Bees on a Starry Night" Height="300" Width="300">
+        Title="Bees on a Starry Night" Height="500" Width="800">
     <Window.Resources>
         <viewModel:BeeStarViewModel x:Key="viewModel" />
     </Window.Resources>
