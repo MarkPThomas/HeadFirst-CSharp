@@ -1,0 +1,29 @@
+﻿<Window x:Class="Invaders.View.InvadersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invaders.View"
+        xmlns:viewmodel="clr-namespace:Invaders.ViewModel"
+        mc:Ignorable="d"
+        Title="Invaders" 
+        Height="300" Width="300"
+        SizeChanged="Window_SizeChanged"
+        ManipulationCompleted="Window_ManipulationCompleted" ManipulationDelta="Window_ManipulationDelta" 
+        KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Window.Resources>
+        <viewmodel:InvadersViewModel x:Key="viewModel" />
+    </Window.Resources>
+    <Grid>
+        <Border x:Name="playArea"
+                BorderBrush="Blue"
+                BorderThickness="2"
+                CornerRadius="10"
+                Background="Black"
+                Margin="5"
+                Grid.Row="1"
+                Loaded="playArea_Loaded">
+            
+        </Border>
+    </Grid>
+</Window>
