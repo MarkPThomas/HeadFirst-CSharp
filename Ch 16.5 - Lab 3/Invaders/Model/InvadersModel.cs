@@ -10,8 +10,8 @@ namespace Invaders.Model
     class InvadersModel
     {
         public readonly static Size PlayAreaSize = new Size(400, 300);
-        public const int MaximumPlayerShots = 3;
         public const int InitialStarCount = 50;
+        public const int MaximumPlayerShots = 3;
 
         private readonly Random _random = new Random();
 
@@ -21,7 +21,7 @@ namespace Invaders.Model
 
         public bool GameOver { get; private set; }
 
-        // TODO: When the player dies, ViewModel makes the player's ship flash for 2.5 seconds. Nothing moves while this occurs.
+        private TimeSpan _playerDyingTime = TimeSpan.FromMilliseconds(2500);
         private DateTime? _playerDied = null;
         public bool PlayerDying { get { return _playerDied.HasValue; } }
 
@@ -33,20 +33,12 @@ namespace Invaders.Model
         private readonly List<Point> _stars = new List<Point>();
 
         private Direction _invaderDirection = Direction.Left;
-
-        private int _invadersPerRow = 11;
-        private int _invaderRowsPerType = 2;
-        private int _invaderTypeAmount = 3;
-
-        private double _invaderXInterval = 1.4 * Invader.InvaderSize.Width;
-        private double _invaderYInterval = 1.4 * Invader.InvaderSize.Height;
-
-        internal void UpdateAllShipsAndStars()
-        {
-            throw new NotImplementedException();
-        }
-
         private bool _justMovedDown = false;
+
+        private const int _invadersPerRow = 11;
+        private const int _invaderRows = 6;
+
+        private TimeSpan _invaderTimeIntervalLimit = TimeSpan.FromMilliseconds(1000);
 
         private DateTime _lastUpdated = DateTime.MinValue;
 
@@ -117,7 +109,7 @@ namespace Invaders.Model
         {
             if (!PlayerDying)
             {
-                _player.Move(direction);
+                _player.Move(direction, PlayAreaSize);
                 OnShipChanged(_player, false);
             }
         }
@@ -134,11 +126,12 @@ namespace Invaders.Model
             }
         }
 
-
-        public void Update()
+        
+        public void Update(bool isPaused)
         {
             Twinkle();
-            if (!PlayerDying)
+            _lastUpdated = DateTime.Now;
+            if (!PlayerDying || !isPaused)
             {
                 if (_invaders.Count == 0)
                 {
@@ -156,11 +149,26 @@ namespace Invaders.Model
 
                 CheckForPlayerCollisions();
                 CheckForInvaderCollisions();
-
-                _lastUpdated = DateTime.Now;
+            }
+            else
+            {
+                // Indicate player dying process is done
+                if (_lastUpdated - _playerDied >= _playerDyingTime)
+                {
+                    _playerDied = null;
+                    OnShipChanged(_player, false);
+                }
             }
         }
 
+        internal void UpdateAllShipsAndStars()
+        {
+            OnShipChanged(_player, false);
+            foreach (Invader invader in _invaders)
+            {
+                OnShipChanged(invader, false);
+            }
+        }
         #endregion
 
         #region Methods: Private
@@ -184,32 +192,42 @@ namespace Invaders.Model
         private void NextWave()
         {
             Wave += 1;
+            // Scale the speed of the invaders to the wave number, so they get faster at higher levels
+            _invaderTimeIntervalLimit = TimeSpan.FromMilliseconds(1000 / Wave);
             _invaders.Clear();
             
             double xPosition = 0;
             double yPosition = 0;
 
-            for (int i = 0; i < _invaderRowsPerType * _invaderTypeAmount; i++)
+            for (int i = 0; i < _invaderRows; i++)
             {
                 for (int j = 0; j < _invadersPerRow; i++)
                 {
                     // Increment horizontal position
-                    if (xPosition != 0) xPosition += _invaderXInterval;
-                    Invader invader = new Invader(new Point(xPosition, yPosition));
+                    if (xPosition != 0) xPosition += Invader.invaderPixelsPerMove;
+
+                    Invader invader;
+                    if (i < 2)
+                    {
+                        invader = new Invader(new Point(xPosition, yPosition), InvaderType.Star, 10);
+                    }
+                    else 
+                    {
+                        invader = new Invader(new Point(xPosition, yPosition), (InvaderType)(i - 1), 10*i);
+                    }
                     _invaders.Add(invader);
                 }
                 // Reset horizontal position & increment vertical position
                 xPosition = 0;
-                yPosition += _invaderYInterval;
+                yPosition += Invader.invaderPixelsPerMove;
             }
         }
 
         private void MoveInvaders()
         {
             TimeSpan timeSinceLastMoved = DateTime.Now - _lastUpdated;
-            TimeSpan timeLimit = new TimeSpan(0, 0, 0, 0, 5);
 
-            if (timeSinceLastMoved.Milliseconds > timeLimit.Milliseconds)
+            if (timeSinceLastMoved.Milliseconds > _invaderTimeIntervalLimit.Milliseconds)
             {
                 CheckBoundaries();
                 IncrementMoveInvaders();
@@ -221,7 +239,7 @@ namespace Invaders.Model
             if (_invaderDirection == Direction.Right)
             {
                 var invaders = from invader in _invaders
-                               where invader.Location.X > PlayAreaSize.Width - 2 * _invaderXInterval
+                               where invader.Location.X > PlayAreaSize.Width - 2 * Invader.invaderPixelsPerMove
                                select invader;
                 if (invaders.Count() > 0)
                 {
@@ -232,7 +250,7 @@ namespace Invaders.Model
             else
             {
                 var invaders = from invader in _invaders
-                               where invader.Location.X < 2 * _invaderXInterval
+                               where invader.Location.X < 2 * Invader.invaderPixelsPerMove
                                select invader;
                 if (invaders.Count() > 0)
                 {
@@ -248,7 +266,8 @@ namespace Invaders.Model
             {
                 foreach (Invader invader in _invaders)
                 {
-                    invader.Move(Direction.Down);
+                    invader.Move(Direction.Down, PlayAreaSize);
+                    OnShipChanged(invader, false);
                 }
                 _justMovedDown = false;
             }
@@ -256,7 +275,8 @@ namespace Invaders.Model
             {
                 foreach (Invader invader in _invaders)
                 {
-                    invader.Move(_invaderDirection);
+                    invader.Move(_invaderDirection, PlayAreaSize);
+                    OnShipChanged(invader, false);
                 }
             }
         }
@@ -307,6 +327,15 @@ namespace Invaders.Model
                 if (_player.Area.Contains(shot.Location))
                 {
                     _playerDied = DateTime.Now;
+                    Lives--;
+                    if (Lives == 0)
+                    {
+                        EndGame();
+                    }
+                    OnShipChanged(_player, true);
+
+                    _invaderShots.Remove(shot);
+                    OnShotMoved(shot, true);
                 }
             }
         }
@@ -321,8 +350,12 @@ namespace Invaders.Model
                                    select invader;
                 if (deadInvaders.Count() > 0)
                 {
-                    _invaders.Remove(deadInvaders.ToList()[0]);
+                    Score += deadInvaders.ElementAt(0).Score;
+                    _invaders.Remove(deadInvaders.ElementAt(0));
+                    OnShipChanged(deadInvaders.ElementAt(0), true);
+
                     _playerShots.Remove(shot);
+                    OnShotMoved(shot, true);
                 }
             }
 
@@ -335,47 +368,6 @@ namespace Invaders.Model
                 EndGame();
             }
         }
-
-
-        private static bool RectsOverlap(Rect r1, Point p2)
-        {
-            Rect r2 = new Rect(p2.X, p2.Y, Shot.ShotSize.Width, Shot.ShotSize.Height);
-
-            return RectsOverlap(r1, r2);
-        }
-
-        private static bool RectsOverlap(Rect r1, Rect r2)
-        {
-            r1.Intersect(r2);
-            if (r1.Width > 0 || r1.Height > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
-        private static bool IsInHorizontalBounds(Point location, Size size, double deltaX)
-        {
-            Rect r1 = new Rect(location.X, location.Y, size.Width, size.Height);
-            return IsInHorizontalBounds(r1, deltaX);
-        }
-
-        private static bool IsInHorizontalBounds(Rect r1, double deltaX)
-        {
-            if (0 < r1.TopLeft.X + deltaX && r1.TopRight.X + deltaX < PlayAreaSize.Width)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         #endregion
 
 

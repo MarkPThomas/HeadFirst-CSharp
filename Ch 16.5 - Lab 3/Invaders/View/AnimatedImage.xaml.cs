@@ -107,11 +107,13 @@ namespace Invaders.View
 
         public void InvaderShot()
         {
+            CreateInvaderShotStoryBoard();
             invaderShotStoryboard.Begin();
         }
 
         public void StartFlashing()
         {
+            CreateFlashStoryBoard(TimeSpan.FromMilliseconds(10));
             flashStoryboard.Begin();
         }
 

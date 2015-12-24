@@ -13,7 +13,7 @@ namespace Invaders.Model
         /// In pixels.
         /// </summary>
         public static Size PlayerSize = new Size(25,15);
-        const double PlayerPixelsPerMove = 10; 
+        private const double PlayerPixelsPerMove = 10; 
 
         public Player(Point location)
             : base(location, PlayerSize)
@@ -21,10 +21,8 @@ namespace Invaders.Model
 
         }
 
-        public override void Move(Direction direction)
+        public override void Move(Direction direction, Size playAreaSize)
         {
-            // Use InvaderModel's PlayAreaSize to keep player from moving off-screen.
-
             // Player can only move left & right.
             switch (direction)
             {
@@ -32,7 +30,7 @@ namespace Invaders.Model
                     if (Location.X - PlayerPixelsPerMove >= 0) Location = new Point(Location.X - PlayerPixelsPerMove, Location.Y);
                     break;
                 case Direction.Right:
-                    Location = new Point(Location.X + PlayerPixelsPerMove, Location.Y);
+                    if (Location.X + Size.Width + PlayerPixelsPerMove <= playAreaSize.Width) Location = new Point(Location.X + PlayerPixelsPerMove, Location.Y);
                     break;
                 case Direction.Up:
                     break;

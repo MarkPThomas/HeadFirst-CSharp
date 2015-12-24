@@ -16,6 +16,16 @@ namespace Invaders.ViewModel
 {
     class InvadersViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler propertyChanged = PropertyChanged;
+            if (propertyChanged != null)
+            {
+                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         private readonly ObservableCollection<FrameworkElement> _sprites = new ObservableCollection<FrameworkElement>();
         public INotifyCollectionChanged Sprites {  get { return _sprites; } }
 
@@ -49,13 +59,17 @@ namespace Invaders.ViewModel
 
         private readonly InvadersModel _model = new InvadersModel();
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+
         private FrameworkElement _playerControl = null;
         private bool _playerFlashing = false;
+
         private readonly Dictionary<Invader, FrameworkElement> _invaders = new Dictionary<Invader, FrameworkElement>();
         private readonly Dictionary<FrameworkElement, DateTime> _shotInvaders = new Dictionary<FrameworkElement, DateTime>();
         private readonly Dictionary<Shot, FrameworkElement> _shots = new Dictionary<Shot, FrameworkElement>();
         private readonly Dictionary<Point, FrameworkElement> _stars = new Dictionary<Point, FrameworkElement>();
         private readonly List<FrameworkElement> _scanLines = new List<FrameworkElement>();
+
+        private TimeSpan timeLimitInvadersFadeoutSeconds = TimeSpan.FromSeconds(0.5);        
 
         public InvadersViewModel()
         {
@@ -90,7 +104,10 @@ namespace Invaders.ViewModel
             _timer.Start();
         }
 
-
+        public void EndGame()
+        {
+            _model.EndGame();
+        }
 
         public void RecreateScanLines()
         {
@@ -110,9 +127,6 @@ namespace Invaders.ViewModel
                 _sprites.Add(scanLine);
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
 
         private DateTime? _leftAction = null;
         private DateTime? _rightAction = null;
@@ -157,8 +171,14 @@ namespace Invaders.ViewModel
 
             if (e.Key == Key.P)
             {
-                Paused = true;
-                // TODO: Figure out how to pause the game
+                if (Paused)
+                {
+                    Paused = false;
+                }
+                else
+                {
+                    Paused = true;
+                }
             }
         }
 
@@ -180,29 +200,73 @@ namespace Invaders.ViewModel
         {
             if (_lastPaused != Paused)
             {
-                // Use the _lastPaused field to fire a PropertyChanged event any time the Paused property changes
+                _lastPaused = Paused;
+                OnPropertyChanged("Paused");
             }
             if (!Paused)
+            // Move player
             {
-                // if _leftAction and _rightAction have a value, use the one with the later time to choose a direction to move the player
-                // if not, choose the one with a value and use that to pass to _model.MovePlayer()
+                if (_leftAction != null && _rightAction != null)
+                {
+                    if (_leftAction > _rightAction)
+                    {
+                        _model.MovePlayer(Direction.Left);
+                    }
+                    else
+                    {
+                        _model.MovePlayer(Direction.Right);
+                    }
+                }
+                else if (_leftAction != null)
+                {
+                    _model.MovePlayer(Direction.Left);
+                }
+                else if (_rightAction != null)
+                {
+                    _model.MovePlayer(Direction.Right);
+                }
             }
 
-            // Tell the InvadersModel to upate itself
-            // Check Score property
-            // If Score property != _model.Score, update it and fire a PropertyChanged event
+            _model.Update(Paused);
 
-            // Update Lives so it matches _model.Lives by either adding or removing a new object()
+            // Update score
+            if (Score != _model.Score)
+            {
+                Score = _model.Score;
+                OnPropertyChanged("Score");
+            }
 
+            // Update lives
+            if (_lives.Count > _model.Lives)
+            {
+                _lives.RemoveAt(_lives.Count - 1);
+                if (_lives.Count == 0)
+                {
+                    EndGame();
+                }
+            }
+            else if (_lives.Count < _model.Lives)
+            {
+                _lives.Add(new object());
+            }
+            
+            // Remove died invaders who have finished fading out
             foreach (FrameworkElement control in _shotInvaders.Keys.ToList())
             {
-                // Each key in the _shotInvaders Dictionary is an AnimatedImage control, and its value is the time that it died.
-                // It takes 0.5 sec for the invader fade-out animation to complete, so any invader who died longer ago should
-                //  be removed from both _sprites and _shotInvaders
-                
+                DateTime invaderDiedTime = _shotInvaders[control];
+                TimeSpan timeSinceInvaderDied = DateTime.Now - invaderDiedTime;
+                if (timeSinceInvaderDied > timeLimitInvadersFadeoutSeconds)
+                {
+                    _sprites.Remove(control);
+                    _shotInvaders.Remove(control);
+                }
             }
 
-            // If the game is over, fire a PropertyChanged event and stop the timer
+            if (GameOver)
+            {
+                OnPropertyChanged("GameOver");
+                _timer.Stop();
+            }
         }
 
         private void ModelShipChangedEventHandler(object sender, ShipChangedEventArgs e)
@@ -213,35 +277,79 @@ namespace Invaders.ViewModel
                 {
                     Invader invader = e.ShipUpdated as Invader;
 
-                    // If this invader is not in the _invaders collection, use the InvadersControlFactory() to create a new control and
-                    // add it to the collection and sprites.
-                    // Otherwise, move the invader control to its correct location and resize it, including the Scale value.
-
-                    InvadersHelper.ResizeElement(invaderControl,
-                                                 invader.Size.Width * Scale,
-                                                 invader.Size.Height * Scale);
+                    if (!_invaders.ContainsKey(invader))
+                    {
+                        FrameworkElement invaderControl = InvadersHelper.InvaderFactory((int)invader.InvaderType, 
+                                                                                        invader.Size.Width, 
+                                                                                        invader.Size.Height,
+                                                                                        Scale,
+                                                                                        _timer.Interval);
+                        _sprites.Add(invaderControl);
+                        _invaders.Add(invader, invaderControl);
+                    }
+                    else
+                    {
+                        FrameworkElement invaderControl = _invaders[invader];
+                        InvadersHelper.MoveElementOnCanvas(invaderControl, 
+                                                            invader.Location.X, 
+                                                            invader.Location.Y,
+                                                            Scale);
+                        InvadersHelper.ResizeElement((AnimatedImage)invaderControl,
+                                                     invader.Size.Width,
+                                                     invader.Size.Height,
+                                                     Scale);
+                    }
                 }
                 else if (e.ShipUpdated is Player)
                 {
-                    // If _playerFlashing is true, stop it from flashing.
-                    // If _playerControl is null and use PlayerControlFactory() and add new player to the sprites
-                    // Otherwise move and resize player
+                    Player player = e.ShipUpdated as Player;
+
+                    if (_playerFlashing && !_model.PlayerDying)
+                    {
+                        _playerFlashing = false;
+                        AnimatedImage playerControl = (AnimatedImage)_playerControl;
+                        playerControl.StopFlashing();
+                        if (_playerControl == null)
+                        {
+                            _playerControl = InvadersHelper.PlayerFactory(player.Size.Width, 
+                                                                            player.Size.Height, 
+                                                                            Scale, 
+                                                                            _timer.Interval);
+                            _sprites.Add(_playerControl);
+                        }
+                        else
+                        {
+                            InvadersHelper.MoveElementOnCanvas(_playerControl, 
+                                                                player.Location.X, 
+                                                                player.Location.Y,
+                                                                Scale);
+                            InvadersHelper.ResizeElement((AnimatedImage)_playerControl,
+                                                         player.Size.Width,
+                                                         player.Size.Height,
+                                                         Scale);
+                        }
+                    }
                 }
             }
             else
             {
+                // Invader killed
                 if (e.ShipUpdated is Invader)
                 {
-                    // If invader isn't null, call InvaderShot() and cast it to AnimatedImages.
-                    // Add invader to _shotInvaders and remove it from _invadors
-                    // _shotInvaders dictionary contains the time that each invader was shot.
-                    // ViewModel doesn't remove the invader's AnimatedImage control from the sprites until it's finished fading out.
+                    Invader invader = e.ShipUpdated as Invader;
+                    AnimatedImage invaderControl = (AnimatedImage)_invaders[invader];
+
+                    invaderControl.InvaderShot();
+                    _shotInvaders.Add(invaderControl, DateTime.Now);
+                    _invaders.Remove(invader);
                 }
+                // Player killed
                 else if (e.ShipUpdated is Player)
                 {
-                    // Cast _playerControl to AnimatedImage, start it flashing, and set the _playerFlashing field to true.
-                    // This animation can keep going until the ViewModel gets another ShipChanged event from the model,
-                    //  because that means gameplay has resumed
+                    Player player = e.ShipUpdated as Player;
+                    AnimatedImage playerControl = (AnimatedImage)_playerControl;
+                    playerControl.StartFlashing();
+                    _playerFlashing = true;
                 }
             }
         }
@@ -250,13 +358,32 @@ namespace Invaders.ViewModel
         {
             if (!e.Disappeared)
             {
-                // if shot is NOT a key in the _shots dictionary, use its factory method to create a new shot control and add it to _shots & _sprites.
-                // Else look up its controls and use the helper method to move it using its location property
+                if (!_shots.ContainsKey(e.Shot))
+                {
+                    FrameworkElement shotControl = InvadersHelper.ShotFactory(Shot.ShotSize.Width, 
+                                                                                Shot.ShotSize.Height, 
+                                                                                Scale,
+                                                                                _timer.Interval);
+                    InvadersHelper.SetCanvasLocation(shotControl, 
+                                                        e.Shot.Location.X, 
+                                                        e.Shot.Location.Y,
+                                                        Scale);
+                    _shots.Add(e.Shot, shotControl);
+                    _sprites.Add(shotControl);
+                }
+                else
+                {
+                    FrameworkElement shotControl = _shots[e.Shot];
+                    InvadersHelper.MoveElementOnCanvas(shotControl, 
+                                                        e.Shot.Location.X, 
+                                                        e.Shot.Location.Y + Shot.ShotPixelsPerSecond, 
+                                                        Scale);
+                }
             }
-            else
+            else if(_shots.ContainsKey(e.Shot))
             {
-                // Check _shots to see if it is there. 
-                // If so, remove its control control from _sprites, and remove Shot from _shots
+                FrameworkElement control = _shots[e.Shot];
+                _sprites.Remove(control);
             }
         }
 
@@ -264,12 +391,17 @@ namespace Invaders.ViewModel
         {
             if (e.Disappeared && _stars.ContainsKey(e.Point))
             {
-                // Look up control in _stars and remove it from _sprites
+                FrameworkElement control = _stars[e.Point];
+                _sprites.Remove(control);
             }
-            else
+            else if (_stars.ContainsKey(e.Point))
             {
-                // Not likely to occur
-                // Add a shooting star: Look up star control in _stars and use a helper method to move it to the new location
+                // Create a shooting star
+                FrameworkElement control = _stars[e.Point];
+                InvadersHelper.MoveElementOnCanvas(control, 
+                                                    InvadersModel.PlayAreaSize.Width, 
+                                                    InvadersModel.PlayAreaSize.Height,
+                                                    Scale);
             }
         }
         #endregion

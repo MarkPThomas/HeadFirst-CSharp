@@ -13,7 +13,6 @@ namespace Invaders.Model
 
         public Point Location { get; private set; }
 
-        // TODO: Figure out a way to change this so it scales up and down when the page size changes.
         public static Size ShotSize = new Size(2, 10);
         public Direction Direction { get; private set; }
 

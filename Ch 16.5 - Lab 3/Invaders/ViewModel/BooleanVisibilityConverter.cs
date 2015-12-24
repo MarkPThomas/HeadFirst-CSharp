@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Stopwatch.ViewModel
+namespace Invaders.ViewModel
 {
     class BooleanVisibilityConverter : IValueConverter
     {

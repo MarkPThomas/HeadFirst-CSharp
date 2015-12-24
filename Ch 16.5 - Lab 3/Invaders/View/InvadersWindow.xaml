@@ -8,22 +8,71 @@
         mc:Ignorable="d"
         Title="Invaders" 
         Height="300" Width="300"
+        Background="#FF1F1F1F"
         SizeChanged="Window_SizeChanged"
         ManipulationCompleted="Window_ManipulationCompleted" ManipulationDelta="Window_ManipulationDelta" 
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Window.Resources>
         <viewmodel:InvadersViewModel x:Key="viewModel" />
+        <viewmodel:BooleanVisibilityConverter x:Key="visiblityConverter" />
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="baseGrid" DataContext="{StaticResource ResourceKey=viewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Invaders"
+                   Grid.Row="0" Grid.Column="0"
+                   HorizontalAlignment="Left"
+                   Margin="5"
+                   FontSize="14" Foreground="White"/>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Right"
+                    Margin="5"
+                    Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="{Binding Score}" 
+                           HorizontalAlignment="Right"
+                           Foreground="White"/>
+            <!--<GridView.ColumnCollection>
+
+            </GridView.ColumnCollection>-->
+        </StackPanel>
+
         <Border x:Name="playArea"
                 BorderBrush="Blue"
                 BorderThickness="2"
                 CornerRadius="10"
                 Background="Black"
                 Margin="5"
-                Grid.Row="1"
+                Grid.Row="1" Grid.ColumnSpan="2"
                 Loaded="playArea_Loaded">
-            
+            <ItemsControl
+                DataContext="{StaticResource viewModel}"
+                ItemsSource="{Binding Path=Sprites}" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!--<Canvas Background="Black"
+                            SizeChanged="Canvas_SizeChanged"/>-->
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Border>
+
+        <TextBlock Text="Game Over"
+                   Grid.Row="1" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding GameOver, Converter={StaticResource visiblityConverter}}" 
+                   Foreground="Red" FontWeight="Bold" FontSize="40"/>
+        <TextBlock Text="Paused"
+                   Grid.Row="1" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Visibility="{Binding Paused, Converter={StaticResource visiblityConverter}}" 
+                   Foreground="Gray" FontWeight="Bold" FontSize="40"/>
     </Grid>
 </Window>
