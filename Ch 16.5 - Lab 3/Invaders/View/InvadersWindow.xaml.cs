@@ -27,17 +27,24 @@ namespace Invaders.View
             InitializeComponent();
 
             viewModel = FindResource("viewModel") as InvadersViewModel;
+
+            double cornerRadius = 10;
+            playArea.CornerRadius = new CornerRadius(cornerRadius);
+            playArea.Padding = new Thickness(cornerRadius * (1 - Math.Cos(Math.PI / 4)));
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdatePlayAreaSize(new Size(e.NewSize.Width, e.NewSize.Height - 160));
+            // UpdatePlayAreaSize(new Size(e.NewSize.Width, e.NewSize.Height - gridTitle.ActualHeight));
+            viewModel.PlayAreaSize = playArea.RenderSize;
         }
 
 
         private void playArea_Loaded(object sender, RoutedEventArgs e)
         {
-            UpdatePlayAreaSize(playArea.RenderSize);
+            // TODO: Play area spills off of screen
+            //UpdatePlayAreaSize(playArea.RenderSize);
+           viewModel.PlayAreaSize = playArea.RenderSize;
         }
 
         private void UpdatePlayAreaSize(Size newPlayAreaSize)
@@ -49,17 +56,17 @@ namespace Invaders.View
             {
                 targetWidth = newPlayAreaSize.Height * 4 / 3;
                 targetHeight = newPlayAreaSize.Height;
-                double leftRightMargin = (newPlayAreaSize.Width - targetWidth) / 2;
-                playArea.Margin = new Thickness(leftRightMargin, 0, leftRightMargin, 0);
+                double leftRightMargin = Math.Min(5,(newPlayAreaSize.Width - targetWidth) / 2);
+                playArea.Margin = new Thickness(leftRightMargin, 5, leftRightMargin, 5);
             }
             else
             {
                 targetHeight = newPlayAreaSize.Width * 3 / 4;
                 targetWidth = newPlayAreaSize.Width;
-                double topBottomMargin = (newPlayAreaSize.Height - targetHeight) / 2;
-                playArea.Margin = new Thickness(topBottomMargin, 0, topBottomMargin, 0);
+                double topBottomMargin = Math.Min(5,(newPlayAreaSize.Height - targetHeight) / 2);
+                playArea.Margin = new Thickness(5, topBottomMargin, 5, topBottomMargin);
             }
-
+            
             playArea.Width = targetWidth;
             playArea.Height = targetHeight;
             viewModel.PlayAreaSize = new Size(targetWidth, targetHeight);

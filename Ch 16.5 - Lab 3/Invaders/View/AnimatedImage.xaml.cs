@@ -29,39 +29,6 @@ namespace Invaders.View
             InitializeComponent();
         }
 
-        public void CreateFlashStoryBoard(TimeSpan interval)
-        {
-            flashStoryboard = new Storyboard();
-            ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames();
-            Storyboard.SetTarget(animation, image);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(image.Visibility));
-
-            TimeSpan currentInterval = TimeSpan.FromMilliseconds(0);
-            ObjectKeyFrame keyFrameVisible = new DiscreteObjectKeyFrame();
-            keyFrameVisible.Value = Visibility.Visible;
-            keyFrameVisible.KeyTime = currentInterval;
-
-            animation.KeyFrames.Add(keyFrameVisible);
-            currentInterval = currentInterval.Add(interval);
-
-            ObjectKeyFrame keyFrameHidden = new DiscreteObjectKeyFrame();
-            keyFrameHidden.Value = Visibility.Hidden;
-            keyFrameHidden.KeyTime = currentInterval;
-
-            animation.KeyFrames.Add(keyFrameHidden);
-            currentInterval = currentInterval.Add(interval);
-        }
-
-        public void CreateInvaderShotStoryBoard()
-        {
-            invaderShotStoryboard = new Storyboard();
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = 1;
-            animation.To = 0;
-            Storyboard.SetTarget(animation, image);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(image.Opacity));
-        }
-
         public AnimatedImage(IEnumerable<string> imageNames, TimeSpan interval) 
             : this()
         {
@@ -70,26 +37,33 @@ namespace Invaders.View
 
         public void StartAnimation(IEnumerable<string> imageNames, TimeSpan interval)
         {
-            Storyboard storyboard = new Storyboard();
-            ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames();
-            Storyboard.SetTarget(animation, image);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(Image.SourceProperty));
-
-            TimeSpan currentInterval = TimeSpan.FromMilliseconds(0);
-            foreach (string imageName in imageNames)
+            try
             {
-                ObjectKeyFrame keyFrame = new DiscreteObjectKeyFrame();
-                keyFrame.Value = CreateImageFromAssets(imageName);
-                keyFrame.KeyTime = currentInterval;
+                Storyboard storyboard = new Storyboard();
+                ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames();
+                Storyboard.SetTarget(animation, image);
+                Storyboard.SetTargetProperty(animation, new PropertyPath(Image.SourceProperty));
 
-                animation.KeyFrames.Add(keyFrame);
-                currentInterval = currentInterval.Add(interval);
+                TimeSpan currentInterval = TimeSpan.FromMilliseconds(0);
+                foreach (string imageName in imageNames)
+                {
+                    ObjectKeyFrame keyFrame = new DiscreteObjectKeyFrame();
+                    keyFrame.Value = CreateImageFromAssets(imageName);
+                    keyFrame.KeyTime = currentInterval;
+
+                    animation.KeyFrames.Add(keyFrame);
+                    currentInterval = currentInterval.Add(interval);
+                }
+
+                storyboard.RepeatBehavior = RepeatBehavior.Forever;
+                storyboard.AutoReverse = true;
+                storyboard.Children.Add(animation);
+                storyboard.Begin();
             }
+            catch (System.IO.IOException)
+            {
 
-            storyboard.RepeatBehavior = RepeatBehavior.Forever;
-            storyboard.AutoReverse = true;
-            storyboard.Children.Add(animation);
-            storyboard.Begin();
+            }
         }
 
         private static BitmapImage CreateImageFromAssets(string imageFilename)
@@ -105,15 +79,57 @@ namespace Invaders.View
             }
         }
 
-        public void InvaderShot()
+
+        public void CreateFlashStoryBoard(TimeSpan interval)
         {
-            CreateInvaderShotStoryBoard();
+            flashStoryboard = new Storyboard();
+            ObjectAnimationUsingKeyFrames animation = new ObjectAnimationUsingKeyFrames();
+            Storyboard.SetTarget(animation, image);
+            Storyboard.SetTargetProperty(animation, new PropertyPath(Control.VisibilityProperty));
+
+            TimeSpan currentInterval = TimeSpan.FromMilliseconds(0);
+            ObjectKeyFrame keyFrameVisible = new DiscreteObjectKeyFrame();
+            keyFrameVisible.Value = Visibility.Visible;
+            keyFrameVisible.KeyTime = currentInterval;
+
+            animation.KeyFrames.Add(keyFrameVisible);
+            currentInterval = currentInterval.Add(interval);
+
+            ObjectKeyFrame keyFrameHidden = new DiscreteObjectKeyFrame();
+            keyFrameHidden.Value = Visibility.Hidden;
+            keyFrameHidden.KeyTime = currentInterval;
+
+            animation.KeyFrames.Add(keyFrameHidden);
+            currentInterval = currentInterval.Add(interval);
+
+            flashStoryboard.RepeatBehavior = RepeatBehavior.Forever;
+            flashStoryboard.AutoReverse = true;
+            flashStoryboard.Children.Add(animation);
+        }
+
+        public void CreateInvaderShotStoryBoard(TimeSpan currentInterval)
+        {
+            invaderShotStoryboard = new Storyboard();
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 1;
+            animation.To = 0;
+            Storyboard.SetTarget(animation, image);
+            Storyboard.SetTargetProperty(animation, new PropertyPath(Control.OpacityProperty));
+            
+            animation.Duration = currentInterval;
+
+            invaderShotStoryboard.Children.Add(animation);
+        }
+
+        public void InvaderShot(TimeSpan currentInterval)
+        {
+            CreateInvaderShotStoryBoard(currentInterval);
             invaderShotStoryboard.Begin();
         }
 
         public void StartFlashing()
         {
-            CreateFlashStoryBoard(TimeSpan.FromMilliseconds(10));
+            CreateFlashStoryBoard(TimeSpan.FromMilliseconds(500));
             flashStoryboard.Begin();
         }
 

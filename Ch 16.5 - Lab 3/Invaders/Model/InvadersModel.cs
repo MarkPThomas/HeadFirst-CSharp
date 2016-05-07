@@ -40,7 +40,7 @@ namespace Invaders.Model
 
         private TimeSpan _invaderTimeIntervalLimit = TimeSpan.FromMilliseconds(1000);
 
-        private DateTime _lastUpdated = DateTime.MinValue;
+        private DateTime _invadersLastMoved = DateTime.MinValue;
 
         public InvadersModel()
         {
@@ -87,7 +87,7 @@ namespace Invaders.Model
             }
 
             _player = new Player(new Point(_random.Next((int)(PlayAreaSize.Width - Player.PlayerSize.Width)),
-                                           _random.Next((int)(PlayAreaSize.Height - Player.PlayerSize.Height))));
+                                           (int)(PlayAreaSize.Height) - Player.PlayerSize.Height));
             OnShipChanged(_player, false);
             Lives = 2;
 
@@ -130,8 +130,7 @@ namespace Invaders.Model
         public void Update(bool isPaused)
         {
             Twinkle();
-            _lastUpdated = DateTime.Now;
-            if (!PlayerDying || !isPaused)
+            if (!PlayerDying && !isPaused)
             {
                 if (_invaders.Count == 0)
                 {
@@ -150,10 +149,11 @@ namespace Invaders.Model
                 CheckForPlayerCollisions();
                 CheckForInvaderCollisions();
             }
-            else
+            else if (_playerDied != null)
             {
                 // Indicate player dying process is done
-                if (_lastUpdated - _playerDied >= _playerDyingTime)
+                TimeSpan timeSincePlayerDied = DateTime.Now - (DateTime)_playerDied;
+                if (timeSincePlayerDied.TotalMilliseconds >= _playerDyingTime.TotalMilliseconds)
                 {
                     _playerDied = null;
                     OnShipChanged(_player, false);
@@ -164,9 +164,15 @@ namespace Invaders.Model
         internal void UpdateAllShipsAndStars()
         {
             OnShipChanged(_player, false);
+
             foreach (Invader invader in _invaders)
             {
                 OnShipChanged(invader, false);
+            }
+
+            foreach (Point star in _stars)
+            {
+                OnStarChanged(star, false);
             }
         }
         #endregion
@@ -197,15 +203,12 @@ namespace Invaders.Model
             _invaders.Clear();
             
             double xPosition = 0;
-            double yPosition = 0;
+            double yPosition = Invader.invaderPixelsPerMove * _invaderRows - 1;
 
             for (int i = 0; i < _invaderRows; i++)
             {
-                for (int j = 0; j < _invadersPerRow; i++)
+                for (int j = 0; j < _invadersPerRow; j++)
                 {
-                    // Increment horizontal position
-                    if (xPosition != 0) xPosition += Invader.invaderPixelsPerMove;
-
                     Invader invader;
                     if (i < 2)
                     {
@@ -216,21 +219,25 @@ namespace Invaders.Model
                         invader = new Invader(new Point(xPosition, yPosition), (InvaderType)(i - 1), 10*i);
                     }
                     _invaders.Add(invader);
+                    
+                    // Increment horizontal position
+                    xPosition += Invader.invaderPixelsPerMove;
                 }
                 // Reset horizontal position & increment vertical position
                 xPosition = 0;
-                yPosition += Invader.invaderPixelsPerMove;
+                yPosition -= Invader.invaderPixelsPerMove;
             }
         }
 
         private void MoveInvaders()
         {
-            TimeSpan timeSinceLastMoved = DateTime.Now - _lastUpdated;
+            TimeSpan timeSinceLastMoved = DateTime.Now - _invadersLastMoved;
 
-            if (timeSinceLastMoved.Milliseconds > _invaderTimeIntervalLimit.Milliseconds)
+            if (timeSinceLastMoved.TotalMilliseconds > _invaderTimeIntervalLimit.TotalMilliseconds)
             {
                 CheckBoundaries();
                 IncrementMoveInvaders();
+                _invadersLastMoved = DateTime.Now;
             }
         }
 
@@ -287,21 +294,69 @@ namespace Invaders.Model
             if ((_invaderShots.Count() > Wave + 1) ||
                 (_random.Next(10) < 10 - Wave)){ return; }
 
-            // Only invaders at the bottom of the formation fire shots at the player.
-            // Get a random one.
-            Invader randomInvader  = _invaders.GroupBy( q => q.Location.X )
-                                              .OrderByDescending( d => d.Key)
-                                              .Select( g => g.ElementAt(_random.Next( g.Count() )) )
+            Invader randomInvader = _invaders.GroupBy(q => q.Location.Y)
+                                              .OrderBy(d => d.Key)
+                                              .Select(g => g.ElementAt(_random.Next(g.Count())))
                                               .Last();
 
+            InvaderFire(randomInvader);
+
+            foreach (Invader invader in _invaders)
+            {
+                if (TakeAim(_player.Location.X, _player.Size.Width,
+                            invader.Location.X, invader.Size.Width))
+                {
+                    InvaderFire(randomInvader);
+                }
+            }
+        }
+
+        private void InvaderFire(Invader invader)
+        {
             // Get a point at the bottom center of the invader
-            Point shotLocation = new Point((randomInvader.Area.BottomRight.X - randomInvader.Area.BottomLeft.X) / 2,
-                                        randomInvader.Area.Bottom);
+            Point shotLocation = new Point((invader.Area.BottomRight.X + invader.Area.BottomLeft.X) / 2,
+                                            invader.Area.Bottom);
 
             Shot newShot = new Shot(shotLocation, Direction.Down);
             _invaderShots.Add(newShot);
 
             OnShotMoved(newShot, false);
+        }
+
+        /// <summary>
+        /// AI method for a more aggressive game. Taken from: http://gamecodeschool.com/android/coding-a-space-invaders-game/
+        /// </summary>
+        /// <param name="playerShipX"></param>
+        /// <param name="playerShipWidth"></param>
+        /// <returns></returns>
+        public bool TakeAim(double playerShipX, double playerShipWidth,
+                            double invaderX, double invaderWidth)
+        {
+
+            int randomNumber = -1;
+            
+            // If near the player
+            if (((playerShipX + playerShipWidth) > invaderWidth && (playerShipX + playerShipWidth) < (invaderX + invaderWidth)) ||
+                    (playerShipX > invaderX && playerShipX < (invaderX + invaderWidth)))
+            {
+
+                // A 1 in 150 chance to shoot
+                randomNumber = _random.Next(150);
+                if (randomNumber == 0)
+                {
+                    return true;
+                }
+
+            }
+
+            // If firing randomly (not near the player) a 1 in 2000 chance
+            randomNumber = _random.Next(2000);
+            if (randomNumber == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -313,8 +368,12 @@ namespace Invaders.Model
                 shot.Move();
                 if (shot.Location.Y < 0 || PlayAreaSize.Height < shot.Location.Y)
                 {
-                    _playerShots.Remove(shot);
+                    shots.Remove(shot);
                     OnShotMoved(shot, true);
+                }
+                else
+                {
+                    OnShotMoved(shot, false);
                 }
             }
         }
@@ -322,12 +381,13 @@ namespace Invaders.Model
 
         private void CheckForPlayerCollisions()
         {
-            foreach (Shot shot in _invaderShots)
+            foreach (Shot shot in _invaderShots.ToList())
             {
                 if (_player.Area.Contains(shot.Location))
                 {
                     _playerDied = DateTime.Now;
                     Lives--;
+
                     if (Lives == 0)
                     {
                         EndGame();
@@ -350,9 +410,10 @@ namespace Invaders.Model
                                    select invader;
                 if (deadInvaders.Count() > 0)
                 {
-                    Score += deadInvaders.ElementAt(0).Score;
-                    _invaders.Remove(deadInvaders.ElementAt(0));
-                    OnShipChanged(deadInvaders.ElementAt(0), true);
+                    Invader deadInvader = deadInvaders.ElementAt(0);
+                    Score += deadInvader.Score; 
+                    _invaders.Remove(deadInvader);
+                    OnShipChanged(deadInvader, true);
 
                     _playerShots.Remove(shot);
                     OnShotMoved(shot, true);

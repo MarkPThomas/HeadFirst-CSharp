@@ -22,15 +22,15 @@ namespace Invaders.View
             {
                 case 0:
                     Rectangle rectangleStar = new Rectangle();
-                    rectangleStar.Width = 5 * scale;
-                    rectangleStar.Height = 5 * scale;
+                    rectangleStar.Width = 2 * scale;
+                    rectangleStar.Height = 2 * scale;
                     rectangleStar.Fill = ColorFactory();
 
                     return rectangleStar;
                 case 1:
                     Ellipse ellipseStar = new Ellipse();
-                    ellipseStar.Width = 5 * scale;
-                    ellipseStar.Height = 5 * scale;
+                    ellipseStar.Width = 2 * scale;
+                    ellipseStar.Height = 2 * scale;
                     ellipseStar.Fill = ColorFactory();
 
                     return ellipseStar;
@@ -152,15 +152,15 @@ namespace Invaders.View
             double fromY = Canvas.GetTop(uiElement);
 
             Storyboard storyboard = new Storyboard();
-            DoubleAnimation animationX = CreateDoubleAnimation(uiElement, fromX, toX, scale, new PropertyPath(Canvas.LeftProperty));
-            DoubleAnimation animationY = CreateDoubleAnimation(uiElement, fromY, toY, scale, new PropertyPath(Canvas.TopProperty));
+            DoubleAnimation animationX = CreateDoubleAnimation(uiElement, fromX, toX * scale, new PropertyPath(Canvas.LeftProperty));
+            DoubleAnimation animationY = CreateDoubleAnimation(uiElement, fromY, toY * scale, new PropertyPath(Canvas.TopProperty));
 
             storyboard.Children.Add(animationX);
             storyboard.Children.Add(animationY);
             storyboard.Begin();
         }
 
-        public static DoubleAnimation CreateDoubleAnimation(UIElement uiElement, double from, double to, double scale, PropertyPath propertyToAnimate)
+        public static DoubleAnimation CreateDoubleAnimation(UIElement uiElement, double from, double to, PropertyPath propertyToAnimate)
         {
             DoubleAnimation animation = new DoubleAnimation();
 
@@ -168,9 +168,9 @@ namespace Invaders.View
             Storyboard.SetTargetProperty(animation, propertyToAnimate);
 
             // Note that the animation applies to the Canvas.Left property
-            animation.From = from * scale;
-            animation.To = to * scale;
-            animation.Duration = TimeSpan.FromSeconds(3);
+            animation.From = from ;
+            animation.To = to ;
+            animation.Duration = TimeSpan.FromMilliseconds(100);
 
             return animation;
         }
@@ -179,6 +179,11 @@ namespace Invaders.View
         {
             uiElement.Width = width * scale;
             uiElement.Height = height * scale;
+        }
+
+        public static void SendToBack(UIElement newStar)
+        {
+            Canvas.SetZIndex(newStar, -1000);
         }
     }
 }

@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:Invaders.ViewModel"
         mc:Ignorable="d"
         Title="Invaders" 
-        Height="300" Width="300"
+        Height="400" Width="400"
         Background="#FF1F1F1F"
         SizeChanged="Window_SizeChanged"
         ManipulationCompleted="Window_ManipulationCompleted" ManipulationDelta="Window_ManipulationDelta" 
@@ -15,48 +15,78 @@
     <Window.Resources>
         <viewmodel:InvadersViewModel x:Key="viewModel" />
         <viewmodel:BooleanVisibilityConverter x:Key="visiblityConverter" />
+
+        <Style x:Key="labels" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
     </Window.Resources>
     <Grid x:Name="baseGrid" DataContext="{StaticResource ResourceKey=viewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition x:Name="gridTitle" Height="44"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="100" />
-        </Grid.ColumnDefinitions>
         <TextBlock Text="Invaders"
                    Grid.Row="0" Grid.Column="0"
                    HorizontalAlignment="Left"
                    Margin="5"
-                   FontSize="14" Foreground="White"/>
+                   Style="{StaticResource labels}"
+                   FontSize="24"/>
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Right"
                     Margin="5"
                     Grid.Row="0" Grid.Column="1">
-            <TextBlock Text="{Binding Score}" 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Wave:" 
+                           Style="{StaticResource labels}"
+                           Margin="0,0,5,0"/>
+                <TextBlock Text="{Binding Wave}" 
                            HorizontalAlignment="Right"
-                           Foreground="White"/>
-            <!--<GridView.ColumnCollection>
-
-            </GridView.ColumnCollection>-->
+                           Style="{StaticResource labels}"
+                           Margin="0,0,10,0"/>
+                <TextBlock Text="Score:" 
+                           Style="{StaticResource labels}"
+                           Margin="0,0,5,0"/>
+                <TextBlock Text="{Binding Score}" 
+                           HorizontalAlignment="Right"
+                           Style="{StaticResource labels}"/>
+            </StackPanel>
+            <!--<TextBlock Text="{Binding Lives.Count}" 
+                           HorizontalAlignment="Right"
+                           Foreground="White"/>-->
+            <ListView ItemsSource="{Binding Lives}" 
+                      Background="{x:Null}" 
+                      BorderBrush="{x:Null}" >
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="/player.png" Width="27" Height="15" Stretch="Fill"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackPanel>
 
         <Border x:Name="playArea"
                 BorderBrush="Blue"
                 BorderThickness="2"
                 CornerRadius="10"
-                Background="Black"
+                Background="Gray"
                 Margin="5"
-                Grid.Row="1" Grid.ColumnSpan="2"
+                Padding="2.928932188
+"
+                Grid.Row="1"
                 Loaded="playArea_Loaded">
             <ItemsControl
                 DataContext="{StaticResource viewModel}"
                 ItemsSource="{Binding Path=Sprites}" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <!--<Canvas Background="Black"
-                            SizeChanged="Canvas_SizeChanged"/>-->
+                        <Canvas Background="Black" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>

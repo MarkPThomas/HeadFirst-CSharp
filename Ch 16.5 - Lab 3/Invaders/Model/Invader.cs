@@ -40,7 +40,8 @@ namespace Invaders.Model
                 case Direction.Up:
                     break;
                 case Direction.Down:
-                    if (Location.Y + Size.Height + invaderPixelsPerMove <= playAreaSize.Height) Location = new Point(Location.X, Location.Y + invaderPixelsPerMove);
+                    //if (Location.Y + Size.Height + invaderPixelsPerMove <= playAreaSize.Height) Location = new Point(Location.X, Location.Y + invaderPixelsPerMove);
+                    Location = new Point(Location.X, Location.Y + invaderPixelsPerMove);
                     break;
                 default:
                     break;

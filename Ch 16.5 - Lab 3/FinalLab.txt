@@ -1,0 +1,9 @@
+Player death animaton does not appear.
+
+Invader shots always from the first row invaders. Should lowest row of random column.
+
+
+
+Sizing?
+Invaders get within 1 space of the left side before changing direction
+player goes 1/2 icon too far right

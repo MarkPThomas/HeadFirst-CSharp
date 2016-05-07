@@ -31,6 +31,7 @@ namespace Invaders.ViewModel
 
         public bool GameOver { get { return _model.GameOver; } }
 
+        public int Wave { get { return _model.Wave; } }
 
         private readonly ObservableCollection<object> _lives = new ObservableCollection<object>();
         public INotifyCollectionChanged Lives { get { return _lives; } }
@@ -51,9 +52,9 @@ namespace Invaders.ViewModel
         {
             set
             {
-                Scale = value.Width / 405;
+                Scale = value.Width / 400;
                 _model.UpdateAllShipsAndStars();
-                RecreateScanLines();
+               // RecreateScanLines();
             }
         }
 
@@ -69,7 +70,7 @@ namespace Invaders.ViewModel
         private readonly Dictionary<Point, FrameworkElement> _stars = new Dictionary<Point, FrameworkElement>();
         private readonly List<FrameworkElement> _scanLines = new List<FrameworkElement>();
 
-        private TimeSpan timeLimitInvadersFadeoutSeconds = TimeSpan.FromSeconds(0.5);        
+        private TimeSpan _timeLimitInvadersFadeoutSeconds = TimeSpan.FromSeconds(0.5);        
 
         public InvadersViewModel()
         {
@@ -82,7 +83,8 @@ namespace Invaders.ViewModel
             _timer.Interval = TimeSpan.FromMilliseconds(100);
             _timer.Tick += TimerTickEventHandler;
 
-            EndGame();
+            //EndGame();
+            StartGame();
         }
 
         public void StartGame()
@@ -130,6 +132,7 @@ namespace Invaders.ViewModel
 
         private DateTime? _leftAction = null;
         private DateTime? _rightAction = null;
+        private DateTime? _fireAction = null;
 
         #region Methods: Internal
         internal void LeftGestureStarted()
@@ -154,9 +157,23 @@ namespace Invaders.ViewModel
 
         internal void KeyDown(KeyEventArgs e)
         {
+            if (e.Key == Key.P)
+            {
+                if (Paused)
+                {
+                    Paused = false;
+                }
+                else
+                {
+                    Paused = true;
+                }
+            }
+
+            if (Paused) { return; }
+
             if (e.Key == Key.Space)
             {
-                _model.FireShot();
+                _fireAction = DateTime.Now;
             }
 
             if (e.Key == Key.Left)
@@ -169,29 +186,27 @@ namespace Invaders.ViewModel
                 _rightAction = DateTime.Now;
             }
 
-            if (e.Key == Key.P)
+            if (GameOver && e.Key == Key.Space)
             {
-                if (Paused)
-                {
-                    Paused = false;
-                }
-                else
-                {
-                    Paused = true;
-                }
+                StartGame();
             }
         }
 
         internal void KeyUp(KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+            switch (e.Key)
             {
-                _leftAction = null;
+                case Key.Left:
+                    _leftAction = null;
+                    break;
+                case Key.Right:
+                    _rightAction = null;
+                    break;
+                case Key.Space:
+                    _fireAction = null;
+                    break;
             }
-            else if (e.Key == Key.Right)
-            {
-                _rightAction = null;
-            }
+
         }
         #endregion
 
@@ -210,11 +225,25 @@ namespace Invaders.ViewModel
                 {
                     if (_leftAction > _rightAction)
                     {
-                        _model.MovePlayer(Direction.Left);
+                        if (_fireAction != null && _fireAction > _leftAction)
+                        {
+                            _model.FireShot();
+                        }
+                        else
+                        {
+                            _model.MovePlayer(Direction.Left);
+                        }
                     }
                     else
                     {
-                        _model.MovePlayer(Direction.Right);
+                        if (_fireAction != null && _fireAction > _leftAction)
+                        {
+                            _model.FireShot();
+                        }
+                        else
+                        {
+                            _model.MovePlayer(Direction.Right);
+                        }
                     }
                 }
                 else if (_leftAction != null)
@@ -225,9 +254,14 @@ namespace Invaders.ViewModel
                 {
                     _model.MovePlayer(Direction.Right);
                 }
+                else if (_fireAction != null)
+                {
+                    _model.FireShot();
+                }
             }
 
             _model.Update(Paused);
+
 
             // Update score
             if (Score != _model.Score)
@@ -249,13 +283,14 @@ namespace Invaders.ViewModel
             {
                 _lives.Add(new object());
             }
-            
-            // Remove died invaders who have finished fading out
+            OnPropertyChanged("Lives");
+
+            // Remove dead invaders who have finished fading out
             foreach (FrameworkElement control in _shotInvaders.Keys.ToList())
             {
                 DateTime invaderDiedTime = _shotInvaders[control];
                 TimeSpan timeSinceInvaderDied = DateTime.Now - invaderDiedTime;
-                if (timeSinceInvaderDied > timeLimitInvadersFadeoutSeconds)
+                if (timeSinceInvaderDied > _timeLimitInvadersFadeoutSeconds)
                 {
                     _sprites.Remove(control);
                     _shotInvaders.Remove(control);
@@ -286,6 +321,10 @@ namespace Invaders.ViewModel
                                                                                         _timer.Interval);
                         _sprites.Add(invaderControl);
                         _invaders.Add(invader, invaderControl);
+                        InvadersHelper.SetCanvasLocation(invaderControl, 
+                                                            invader.Location.X, 
+                                                            invader.Location.Y, 
+                                                            Scale);
                     }
                     else
                     {
@@ -309,25 +348,30 @@ namespace Invaders.ViewModel
                         _playerFlashing = false;
                         AnimatedImage playerControl = (AnimatedImage)_playerControl;
                         playerControl.StopFlashing();
-                        if (_playerControl == null)
-                        {
-                            _playerControl = InvadersHelper.PlayerFactory(player.Size.Width, 
-                                                                            player.Size.Height, 
-                                                                            Scale, 
-                                                                            _timer.Interval);
-                            _sprites.Add(_playerControl);
-                        }
-                        else
-                        {
-                            InvadersHelper.MoveElementOnCanvas(_playerControl, 
-                                                                player.Location.X, 
-                                                                player.Location.Y,
-                                                                Scale);
-                            InvadersHelper.ResizeElement((AnimatedImage)_playerControl,
-                                                         player.Size.Width,
-                                                         player.Size.Height,
-                                                         Scale);
-                        }
+                    }
+
+                    if (_playerControl == null)
+                    {
+                        _playerControl = InvadersHelper.PlayerFactory(player.Size.Width, 
+                                                                        player.Size.Height, 
+                                                                        Scale, 
+                                                                        _timer.Interval);
+                        _sprites.Add(_playerControl);
+                        InvadersHelper.SetCanvasLocation(_playerControl, 
+                                                            player.Location.X, 
+                                                            player.Location.Y, 
+                                                            Scale);
+                    }
+                    else
+                    {
+                        InvadersHelper.MoveElementOnCanvas(_playerControl, 
+                                                            player.Location.X, 
+                                                            player.Location.Y,
+                                                            Scale);
+                        InvadersHelper.ResizeElement((AnimatedImage)_playerControl,
+                                                        player.Size.Width,
+                                                        player.Size.Height,
+                                                        Scale);
                     }
                 }
             }
@@ -337,11 +381,15 @@ namespace Invaders.ViewModel
                 if (e.ShipUpdated is Invader)
                 {
                     Invader invader = e.ShipUpdated as Invader;
-                    AnimatedImage invaderControl = (AnimatedImage)_invaders[invader];
 
-                    invaderControl.InvaderShot();
-                    _shotInvaders.Add(invaderControl, DateTime.Now);
-                    _invaders.Remove(invader);
+                    if (_invaders.ContainsKey(invader))
+                    {
+                        AnimatedImage invaderControl = (AnimatedImage)_invaders[invader];
+
+                        invaderControl.InvaderShot(_timeLimitInvadersFadeoutSeconds);
+                        _shotInvaders.Add(invaderControl, DateTime.Now);
+                        _invaders.Remove(invader);
+                    }
                 }
                 // Player killed
                 else if (e.ShipUpdated is Player)
@@ -376,14 +424,14 @@ namespace Invaders.ViewModel
                     FrameworkElement shotControl = _shots[e.Shot];
                     InvadersHelper.MoveElementOnCanvas(shotControl, 
                                                         e.Shot.Location.X, 
-                                                        e.Shot.Location.Y + Shot.ShotPixelsPerSecond, 
+                                                        e.Shot.Location.Y, 
                                                         Scale);
                 }
             }
             else if(_shots.ContainsKey(e.Shot))
             {
-                FrameworkElement control = _shots[e.Shot];
-                _sprites.Remove(control);
+                FrameworkElement shotControl = _shots[e.Shot];
+                _sprites.Remove(shotControl);
             }
         }
 
@@ -394,14 +442,26 @@ namespace Invaders.ViewModel
                 FrameworkElement control = _stars[e.Point];
                 _sprites.Remove(control);
             }
-            else if (_stars.ContainsKey(e.Point))
+            else 
             {
-                // Create a shooting star
-                FrameworkElement control = _stars[e.Point];
-                InvadersHelper.MoveElementOnCanvas(control, 
-                                                    InvadersModel.PlayAreaSize.Width, 
-                                                    InvadersModel.PlayAreaSize.Height,
-                                                    Scale);
+                if (!_stars.ContainsKey(e.Point))
+                {
+                    FrameworkElement starControl = InvadersHelper.StarControlFactory(Scale);
+                    InvadersHelper.SendToBack(starControl);
+                    _stars.Add(e.Point, starControl);
+                    _sprites.Add(starControl);
+                    InvadersHelper.SetCanvasLocation(starControl, e.Point.X, e.Point.Y, Scale);
+                }
+                else
+                {
+                    // Create a shooting star
+                    FrameworkElement starControl = _stars[e.Point];
+                    InvadersHelper.MoveElementOnCanvas(starControl,
+                                                        InvadersModel.PlayAreaSize.Width,
+                                                        InvadersModel.PlayAreaSize.Height,
+                                                        Scale);
+                }
+                    
             }
         }
         #endregion
